@@ -1,0 +1,8 @@
+|MÉTODOS DE ORDENAÇÃO|ARQUIVO ORDENADO			|ARQUIVO EM ORDEM REVERSA	     |ARQUIVO RANDÔMICO
+|		     |Comp. 1|Comp. 2|Mov. 1|Mov. 2|Tempo|Comp. 1|Comp. 2|Mov. 1|Mov. 2|Tempo|Comp. 1|Comp. 2|Mov. 1|Mov. 2|Tempo|
+|Insertion Sort	     | 9  | 9 | 9 | 27  | 52 || 54  | 27 | 54 | 63  | 238 || 33  | 27 | 33 | 45  | 156 ||
+|Binary Insertion    | 52  | 0 | 0 | 27  | 52 || 53  | 45 | 90 | 63  | 391 || 57  | 23 | 48 | 90  | 266 ||
+|Select Sort	     | 45  | 45 | 18 | 27  | 113 || 45  | 45 | 18 | 52  | 150 || 45  | 45 | 18 | 29  | 124 ||
+|Bubble Sort	     | 45  | 0 | 0 | 27  | 91 || 45  | 45 | 90 | 3  | 381 || 45  | 45 | 48 | 29  | 272 ||
+|Shake Sort	     | 50  | 45 | 0 | 0  | 106 || 50  | 45 | 90 | 68  | 395 || 50  | 45 | 48 | 135  | 222 ||
+|Heap Sort	     | 50  | 45 | 56 | 27  | 270 || 50  | 45 | 38 | 3  | 215 || 50  | 45 | 48 | 29  | 238 ||
