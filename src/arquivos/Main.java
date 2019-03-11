@@ -237,7 +237,7 @@ public class Main
         ordenado.initComp();
         ordenado.initMov();
         tini = (int) System.currentTimeMillis();
-        ordenado.selecao_direta();
+        ordenado.shell();
         tfim = (int) System.currentTimeMillis();
         com = ordenado.getComp();
         mov = ordenado.getMov();
@@ -248,7 +248,7 @@ public class Main
         auxreverso.initComp();
         auxreverso.initMov();
         tini = (int) System.currentTimeMillis();
-        auxreverso.selecao_direta();
+        auxreverso.shell();
         tfim = (int) System.currentTimeMillis();
         com = auxreverso.getComp();
         mov = auxreverso.getMov();
@@ -259,7 +259,7 @@ public class Main
         auxrandomico.initComp();
         auxrandomico.initMov();
         tini = (int) System.currentTimeMillis();
-        auxrandomico.selecao_direta();
+        auxrandomico.shell();
         tfim = (int) System.currentTimeMillis();
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
@@ -369,8 +369,9 @@ public class Main
         lordenada.geraOrdenada();
         lreversa.geraReversa();
         lrandomica.geraRandomica();
-
-        lrandomica.insercao_direta();
+        
+        lrandomica.exibeLista(); System.out.println("");
+        lrandomica.shell();
         lrandomica.exibeLista();
     }
     
@@ -387,13 +388,13 @@ public class Main
         //randomico.exibirArq();
         
         
-        insertionSort(); //OK
-        binaryInsertion(); //OK
-        selectionSort(); //OK
-        bubbleSort(); //Ok - falta complexidade
-        shakeSort(); //Ok
-//        shellSort();
-        heapSort(); //Ok - falta complexidade
+//        insertionSort(); //OK
+//        binaryInsertion(); //OK
+//        selectionSort(); //OK
+//        bubbleSort(); //Ok - falta complexidade
+//        shakeSort(); //Ok
+        shellSort();
+//        heapSort(); //Ok - falta complexidade
 //        quickSortI();
 //        quickSortII();
 //        mergeI();

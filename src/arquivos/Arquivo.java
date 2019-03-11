@@ -19,10 +19,7 @@ public class Arquivo
         catch (IOException e) { }
     }
     
-    public Arquivo()
-    {
-        
-    }
+    public Arquivo() { }
     
     public void copiaArquivo(RandomAccessFile arquivoOrigem)
     {
@@ -400,6 +397,68 @@ public class Arquivo
             regA.gravaNoArq(arquivo);
             
             tl--;
+        }
+    }
+    
+    public void shell()
+    {
+        Registro reg1 = new Registro(), reg2 = new Registro();
+        int i, j, k, dist, tl = filesize();
+        
+        for(dist = 4; dist > 0; dist /= 2)
+        {
+            for(i = 0; i < dist; i++)
+            {
+                for(j = i; j + dist < tl; j += dist)
+                {
+                    seekArq(j);
+                    reg1.leDoArq(arquivo);
+                    seekArq(j + dist);
+                    reg2.leDoArq(arquivo);
+                    
+                    comp++;
+                    if(reg1.getCodigo() > reg2.getCodigo())
+                    {
+                        mov += 2;
+                        seekArq(j);
+                        reg2.gravaNoArq(arquivo);
+                        seekArq(j + dist);
+                        reg1.gravaNoArq(arquivo);
+                        
+                        k = j;
+                        
+                        if(k - dist >= 0)
+                        {
+                            comp++;
+                            
+                            seekArq(k);
+                            reg1.leDoArq(arquivo);
+                            seekArq(k - dist);
+                            reg2.leDoArq(arquivo);
+                        }
+                        
+                        for(; k >= 0 && reg1.getCodigo() < reg2.getCodigo(); k -= dist)
+                        {
+                            mov += 2;
+                            seekArq(k);
+                            reg2.gravaNoArq(arquivo);
+                            seekArq(k - dist);
+                            reg1.gravaNoArq(arquivo);
+                            
+                            if(k - dist >= 0)
+                            {
+                                comp++;
+                                
+                                seekArq(k);
+                                reg1.leDoArq(arquivo);
+                                seekArq(k - dist);
+                                reg2.leDoArq(arquivo);
+                            }
+                            
+                        }
+                    }
+                }
+            }
         }
     }
     

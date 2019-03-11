@@ -138,4 +138,71 @@ public class Lista
     {
         
     }
+    
+    public void shell()
+    {
+        int dist;
+        No i, auxDist, j, jdist, k, kdist;
+        
+        for(dist = 4; dist > 0; dist /= 2)
+        {
+            auxDist = localizaNo(inicio, dist);
+            i = inicio;
+            while(i != auxDist)
+            {
+                j = i;
+                jdist = localizaNo(j, dist);
+                while(jdist != null)
+                {
+                    if(j.getCod() > jdist.getCod())
+                    {
+                        permutacao(j, jdist);
+                        
+                        k = j;
+                        kdist = localizaNo(k, -dist);
+                        
+                        while(kdist != null)
+                        {
+                            if(k.getCod() < kdist.getCod())
+                                permutacao(k, kdist);
+                            
+                            k = kdist;
+                            kdist = localizaNo(k, -dist);
+                        }
+                    }
+                    
+                    j = jdist;
+                    jdist = localizaNo(j, dist);
+                }
+                
+                i = i.getProx();
+            }
+        }
+    }
+    
+    private No localizaNo(No no, int qntd)
+    {
+        while(qntd != 0 && no != null)
+        {
+            if(qntd > 0)
+            {
+                no = no.getProx();
+                qntd--;
+            }
+            else
+            {
+                no = no.getAnt();
+                qntd++;
+            }
+        }
+        return no;
+    }
+    
+    public void permutacao(No no1, No no2)
+    {
+        No aux = new No(no1.getCod(), null, null);
+        
+        no1.setCod(no2.getCod());
+        no2.setCod(aux.getCod());
+    }
 }
