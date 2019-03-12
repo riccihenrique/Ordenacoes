@@ -58,7 +58,8 @@ public class Lista
 
     public void geraOrdenada()
     {
-        for(int i = 0; i < Main.n; i++)
+        int i;
+        for(i = 0; i < Main.n; i++)
         {
             No aux = new No(i, null, null);
             insereFim(aux);
@@ -67,7 +68,8 @@ public class Lista
     
     public void geraReversa()
     {
-        for(int i = 0; i < Main.n; i++)
+        int i;
+        for(i = 0; i < Main.n; i++)
         {
             No aux = new No(Main.n - i - 1, null, null);
             insereFim(aux);
@@ -77,7 +79,8 @@ public class Lista
     public void geraRandomica()
     {
         Random r = new Random();
-        for(int i = 0; i < Main.n; i++)
+        int i;
+        for(i = 0; i < Main.n; i++)
         {
             No aux = new No(r.nextInt(1200), null, null);
             insereFim(aux);
@@ -111,27 +114,106 @@ public class Lista
     
     public void insercao_binaria()
     {
+        No i, j, pos;
         
+        i = inicio.getProx();
+        
+        while(i != null)
+        {
+            pos = buscaBinaria(i.getCod(), i);
+            
+            while(pos != i)
+            {
+                permutacao(pos, pos.getAnt());
+                pos = localizaNo(pos, -1);
+            }
+            i = localizaNo(i, 1);
+        }
     }
     
-    private No buscaBinaria()
+    private No buscaBinaria(int cod, No fim)
     {
+        No ini = inicio, meio = null;
+        
+        while(ini != meio)
+        {            
+            
+        }
+        
         return null;
     }
     
     public void selecao_direta()
     {
+        No menor, i = inicio, j;
         
+        while(i != null)
+        {
+            j = i;  //Verificar o caso do i.getProx nulo
+            menor = j;
+            while(j != null)
+            {
+                if(j.getCod() < menor.getCod())
+                    menor = j;
+                
+                j = j.getProx();
+            }
+            
+            permutacao(i, menor);
+            
+            i = i.getProx();
+        }
     }
     
     public void bolha()
     {
+        No i, j;
         
+        j = localizaNo(inicio, 0);
+        
+        while(j != inicio.getProx())
+        {
+            i = inicio;
+            while(i != j)
+            {
+                if(i.getCod() > i.getProx().getCod())
+                    permutacao(i, i.getProx());
+                
+                i = i.getProx();
+            }
+            j = j.getAnt();
+        }
     }
     
     public void shake()
     {
+        No i, j, aux;
         
+        j = localizaNo(inicio, 0);
+        
+        i = inicio;
+        while(j != i)
+        {
+            aux = i;
+            while(aux != j)
+            {
+                if(aux.getCod() > aux.getProx().getCod())
+                    permutacao(aux, aux.getProx());
+                
+                aux = aux.getProx();
+            }
+            aux = aux.getAnt();
+            while(aux != i)
+            {
+                if(aux.getCod() < aux.getAnt().getCod())
+                    permutacao(aux, aux.getAnt());
+                aux = aux.getAnt();
+            }
+            
+            i = i.getProx();
+            if(i != j)
+                j = j.getAnt();
+        }
     }
     
     public void heap()
@@ -180,20 +262,61 @@ public class Lista
         }
     }
     
+    public void quick1()
+    {
+        No aux = inicio;
+        
+        while(aux.getProx() != null)
+            aux = aux.getProx();
+        
+        quicksp(inicio, aux);
+    }
+    
+    private void quicksp(No ini, No fim)
+    {
+        No i = ini, j = fim;
+        
+        while(i != j)
+        {
+            while(i != j && i.getCod() <= j.getCod())
+                i = localizaNo(i, 1);
+            
+            permutacao(i, j);
+            while(i != j && j.getCod() >= i.getCod())
+                j = localizaNo(j, -1);
+            
+            permutacao(i, j);
+        }
+        
+        if(i.getAnt() != null &&ini != i.getAnt())
+            quicksp(ini, i.getAnt());
+        if(j.getProx() != null && fim != j.getProx())
+            quicksp(j.getProx(), fim);
+        
+    }
+    
     private No localizaNo(No no, int qntd)
     {
-        while(qntd != 0 && no != null)
+        if(qntd == 0) //Posicionar no fim da fila
         {
-            if(qntd > 0)
-            {
+            while(no.getProx() != null)
                 no = no.getProx();
-                qntd--;
-            }
-            else
+        }
+        else
+        {
+           while(qntd != 0 && no != null)
             {
-                no = no.getAnt();
-                qntd++;
-            }
+                if(qntd > 0)
+                {
+                    no = no.getProx();
+                    qntd--;
+                }
+                else
+                {
+                    no = no.getAnt();
+                    qntd++;
+                }
+            } 
         }
         return no;
     }

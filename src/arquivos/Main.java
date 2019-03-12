@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 
 public class Main 
 {
-    static final int n = 10;
+    static final int n = 8;
     private Arquivo ordenado, reverso, randomico, auxreverso, auxrandomico;
     private FileWriter txt;
     private PrintWriter escritor;
@@ -315,7 +315,7 @@ public class Main
         tfim = (int) System.currentTimeMillis();
         com = ordenado.getComp();
         mov = ordenado.getMov();
-        escreveTabela("|Quick Sort1\t     |", com, (Math.pow(n, 2)- n) / 2, mov, 3 * (n - 1) , tfim - tini);
+        escreveTabela("|Quick Sort 1\t     |", com, (Math.pow(n, 2)- n) / 2, mov, 3 * (n - 1) , tfim - tini);
         
         //Arquivo Reverso
         auxreverso.copiaArquivo(reverso.getFile());
@@ -352,7 +352,7 @@ public class Main
         tfim = (int) System.currentTimeMillis();
         com = ordenado.getComp();
         mov = ordenado.getMov();
-        escreveTabela("|Quick Sort2\t     |", com, (Math.pow(n, 2)- n) / 2, mov, 3 * (n - 1) , tfim - tini);
+        escreveTabela("|Quick Sort 2\t     |", com, (Math.pow(n, 2)- n) / 2, mov, 3 * (n - 1) , tfim - tini);
         
         //Arquivo Reverso
         auxreverso.copiaArquivo(reverso.getFile());
@@ -435,7 +435,7 @@ public class Main
         lrandomica.geraRandomica();
         
         lrandomica.exibeLista(); System.out.println("");
-        lrandomica.shell();
+        lrandomica.bolha();
         lrandomica.exibeLista();
     }
     
@@ -454,8 +454,8 @@ public class Main
 //        shakeSort(); //Ok
 //        shellSort();
 //        heapSort(); //Ok - falta complexidade
-        quickSortI();
-        quickSortII();
+//        quickSortI();
+//        quickSortII();
 //        mergeI();
 //        mergeII();
 //        counting();
@@ -464,6 +464,7 @@ public class Main
 //        comb();
 //        gnome();
 //        tim();
+
         ordenado.exibirArq(); System.out.println("");
         auxreverso.exibirArq(); System.out.println("");
         auxrandomico.exibirArq(); 
@@ -473,7 +474,7 @@ public class Main
     public static void main(String[] args) throws IOException
     {
         Main m = new Main();
-        m.gerarTabela();
-        //m.geraLista();
+        //m.gerarTabela();
+        m.geraLista();
     }
 }
