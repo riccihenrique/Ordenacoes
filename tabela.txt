@@ -1,3 +1,3 @@
 |MÉTODOS DE ORDENAÇÃO|ARQUIVO ORDENADO			|ARQUIVO EM ORDEM REVERSA	     |ARQUIVO RANDÔMICO
 |		     |Comp. 1|Comp. 2|Mov. 1|Mov. 2|Tempo|Comp. 1|Comp. 2|Mov. 1|Mov. 2|Tempo|Comp. 1|Comp. 2|Mov. 1|Mov. 2|Tempo|
-|Shell Sort	     | 23  | 45 | 0 | 27  | 341 || 31  | 45 | 26 | 3  | 700 || 35  | 45 | 26 | 29  | 745 ||
+|Quick Sort1	     | 0  | 45 | 0 | 27  | 250 || 0  | 45 | 0 | 3  | 344 || 0  | 45 | 0 | 29  | 281 ||

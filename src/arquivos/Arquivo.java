@@ -453,8 +453,7 @@ public class Arquivo
                                 reg1.leDoArq(arquivo);
                                 seekArq(k - dist);
                                 reg2.leDoArq(arquivo);
-                            }
-                            
+                            }                            
                         }
                     }
                 }
@@ -462,9 +461,63 @@ public class Arquivo
         }
     }
     
+    public void quick1()
+    {
+        quicksp(0, filesize() - 1);
+    }
+    
+    private void quicksp(int ini, int fim)
+    {
+        int i = ini, j = fim;
+        Registro reg1 = new Registro(), reg2 = new Registro();
+        
+        while(i < j)
+        {
+            seekArq(i);
+            reg1.leDoArq(arquivo);
+            seekArq(j);
+            reg2.leDoArq(arquivo);
+            
+            while(i < j && reg1.getCodigo() <= reg2.getCodigo())
+                i++;
+            
+            if(i < j)
+            {
+                seekArq(i);
+                reg2.gravaNoArq(arquivo);
+                seekArq(j);
+                reg1.gravaNoArq(arquivo);
+            }
+            
+            seekArq(i);
+            reg1.leDoArq(arquivo);
+            seekArq(j);
+            reg2.leDoArq(arquivo);
+            
+            while(i < j && reg2.getCodigo() >= reg1.getCodigo())
+                j--;
+            
+            if(i < j)
+            {
+                seekArq(i);
+                reg2.gravaNoArq(arquivo);
+                seekArq(j);
+                reg1.gravaNoArq(arquivo);
+            }
+        }
+        
+        if(ini < j - 1)
+            quicksp(ini, j - 1);
+        
+        if(fim > i + 1)
+            quicksp(j + 1, fim);
+        
+    }
+    
     public void geraArquivoOrdenado() 
     {
-        for(int i = 0; i < Main.n; i++)
+        int i;
+        for(i = 0; i < Main.n; i++)
         {
             Registro reg = new Registro(i);
             reg.gravaNoArq(arquivo);
@@ -473,7 +526,8 @@ public class Arquivo
     
     public void geraArquivoReverso() 
     {
-        for(int i = 0; i < Main.n; i++)
+        int i;
+        for(i = 0; i < Main.n; i++)
         {
             Registro reg = new Registro(Main.n - i - 1);
             reg.gravaNoArq(arquivo);
@@ -483,7 +537,8 @@ public class Arquivo
     public void geraArquivoRandomico() 
     {
         Random rand = new Random();
-        for(int i = 0; i < Main.n; i++)
+        int i;
+        for(i = 0; i < Main.n; i++)
         {
             Registro reg = new Registro(rand.nextInt(1200));
             reg.gravaNoArq(arquivo);

@@ -306,7 +306,39 @@ public class Main
         
     private void quickSortI()
     {
+        //HEAP
+        //Arquivo Odernado
+        ordenado.initComp();
+        ordenado.initMov();
+        tini = (int) System.currentTimeMillis();
+        ordenado.quick1();
+        tfim = (int) System.currentTimeMillis();
+        com = ordenado.getComp();
+        mov = ordenado.getMov();
+        escreveTabela("|Quick Sort1\t     |", com, (Math.pow(n, 2)- n) / 2, mov, 3 * (n - 1) , tfim - tini);
         
+        //Arquivo Reverso
+        auxreverso.copiaArquivo(reverso.getFile());
+        auxreverso.initComp();
+        auxreverso.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxreverso.quick1();
+        tfim = (int) System.currentTimeMillis();
+        com = auxreverso.getComp();
+        mov = auxreverso.getMov();
+        escreveTabela("", com, (Math.pow(n, 2)- n) / 2, mov, Math.pow(n, 2) / (4 + 3 * (n - 1)) , tfim - tini);
+        
+        //Arquivo Randômico
+        auxrandomico.copiaArquivo(randomico.getFile());
+        auxrandomico.initComp();
+        auxrandomico.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxrandomico.quick1();
+        tfim = (int) System.currentTimeMillis();
+        com = auxrandomico.getComp();
+        mov = auxrandomico.getMov();
+        escreveTabela("", com, (Math.pow(n, 2)- n) / 2, mov, n * (Math.log((double) n) + 0.577216f) , tfim - tini);
+        escritor.write("\n");
     }
     
     private void quickSortII()
@@ -383,19 +415,14 @@ public class Main
         reverso.geraArquivoReverso();
         randomico.geraArquivoRandomico();
         
-        //ordenado.exibirArq();
-        //reverso.exibirArq();
-        //randomico.exibirArq();
-        
-        
 //        insertionSort(); //OK
 //        binaryInsertion(); //OK
 //        selectionSort(); //OK
 //        bubbleSort(); //Ok - falta complexidade
 //        shakeSort(); //Ok
-        shellSort();
+//        shellSort();
 //        heapSort(); //Ok - falta complexidade
-//        quickSortI();
+        quickSortI();
 //        quickSortII();
 //        mergeI();
 //        mergeII();
@@ -414,7 +441,7 @@ public class Main
     public static void main(String[] args) throws IOException
     {
         Main m = new Main();
-        //m.gerarTabela();
-        m.geraLista();
+        m.gerarTabela();
+        //m.geraLista();
     }
 }
