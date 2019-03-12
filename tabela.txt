@@ -1,3 +1,4 @@
 |MÉTODOS DE ORDENAÇÃO|ARQUIVO ORDENADO			|ARQUIVO EM ORDEM REVERSA	     |ARQUIVO RANDÔMICO
 |		     |Comp. 1|Comp. 2|Mov. 1|Mov. 2|Tempo|Comp. 1|Comp. 2|Mov. 1|Mov. 2|Tempo|Comp. 1|Comp. 2|Mov. 1|Mov. 2|Tempo|
-|Quick Sort1	     | 0  | 45 | 0 | 27  | 250 || 0  | 45 | 0 | 3  | 344 || 0  | 45 | 0 | 29  | 281 ||
+|Quick Sort1	     | 45  | 45 | 0 | 27  | 650 || 45  | 45 | 10 | 3  | 644 || 23  | 45 | 26 | 29  | 849 ||
+|Quick Sort2	     | 31  | 45 | 12 | 27  | 383 || 34  | 45 | 22 | 3  | 450 || 42  | 45 | 26 | 29  | 632 ||

@@ -479,10 +479,18 @@ public class Arquivo
             reg2.leDoArq(arquivo);
             
             while(i < j && reg1.getCodigo() <= reg2.getCodigo())
-                i++;
+            {
+                comp++;
+                
+                i++; 
+                seekArq(i);
+                reg1.leDoArq(arquivo);
+            }
+                
             
             if(i < j)
             {
+                mov += 2;
                 seekArq(i);
                 reg2.gravaNoArq(arquivo);
                 seekArq(j);
@@ -494,11 +502,20 @@ public class Arquivo
             seekArq(j);
             reg2.leDoArq(arquivo);
             
-            while(i < j && reg2.getCodigo() >= reg1.getCodigo())
+            while(j > i && reg2.getCodigo() >= reg1.getCodigo())
+            {
+                comp++;
+                
                 j--;
+                seekArq(j);
+                reg2.leDoArq(arquivo);
+            }
+                
             
             if(i < j)
             {
+                mov += 2;
+                
                 seekArq(i);
                 reg2.gravaNoArq(arquivo);
                 seekArq(j);
@@ -511,6 +528,67 @@ public class Arquivo
         
         if(fim > i + 1)
             quicksp(j + 1, fim);
+        
+    }
+    
+    public void quick2()
+    {
+        quickcp(0, filesize() - 1);
+    }
+    
+    private void quickcp(int ini, int fim)
+    {
+        int i = ini, j = fim;
+        Registro reg1 = new Registro(), reg2 = new Registro(), pivo = new Registro();
+        
+        seekArq((ini + fim) / 2);
+        pivo.leDoArq(arquivo);
+        
+        while(i < j)
+        {
+            seekArq(i);
+            reg1.leDoArq(arquivo);
+            
+            comp ++;
+            while(reg1.getCodigo() < pivo.getCodigo())
+            {
+                i++; 
+                seekArq(i);
+                reg1.leDoArq(arquivo);
+                
+                comp ++;
+            }
+            seekArq(j);
+            reg2.leDoArq(arquivo);
+            
+            comp ++;
+            while(reg2.getCodigo() > pivo.getCodigo())
+            {
+                j--;
+                seekArq(j);
+                reg2.leDoArq(arquivo);
+                
+                comp ++;
+            } 
+            
+            if(i <= j)
+            {   
+                mov += 2;
+                
+                seekArq(i);
+                reg2.gravaNoArq(arquivo);
+                seekArq(j);
+                reg1.gravaNoArq(arquivo);
+                
+                i++; j--;
+            }
+        }
+        
+        if(ini < j)
+            quickcp(ini, j);
+        
+        if(fim > i)
+            quickcp(i, fim);
         
     }
     

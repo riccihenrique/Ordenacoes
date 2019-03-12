@@ -306,7 +306,7 @@ public class Main
         
     private void quickSortI()
     {
-        //HEAP
+        //QUICK SEM PIVO
         //Arquivo Odernado
         ordenado.initComp();
         ordenado.initMov();
@@ -343,7 +343,39 @@ public class Main
     
     private void quickSortII()
     {
+        //QUICK COM PIVO
+        //Arquivo Odernado
+        ordenado.initComp();
+        ordenado.initMov();
+        tini = (int) System.currentTimeMillis();
+        ordenado.quick2();
+        tfim = (int) System.currentTimeMillis();
+        com = ordenado.getComp();
+        mov = ordenado.getMov();
+        escreveTabela("|Quick Sort2\t     |", com, (Math.pow(n, 2)- n) / 2, mov, 3 * (n - 1) , tfim - tini);
         
+        //Arquivo Reverso
+        auxreverso.copiaArquivo(reverso.getFile());
+        auxreverso.initComp();
+        auxreverso.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxreverso.quick2();
+        tfim = (int) System.currentTimeMillis();
+        com = auxreverso.getComp();
+        mov = auxreverso.getMov();
+        escreveTabela("", com, (Math.pow(n, 2)- n) / 2, mov, Math.pow(n, 2) / (4 + 3 * (n - 1)) , tfim - tini);
+        
+        //Arquivo Randômico
+        auxrandomico.copiaArquivo(randomico.getFile());
+        auxrandomico.initComp();
+        auxrandomico.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxrandomico.quick2();
+        tfim = (int) System.currentTimeMillis();
+        com = auxrandomico.getComp();
+        mov = auxrandomico.getMov();
+        escreveTabela("", com, (Math.pow(n, 2)- n) / 2, mov, n * (Math.log((double) n) + 0.577216f) , tfim - tini);
+        escritor.write("\n"); 
     }
     
     private void mergeI()
@@ -423,7 +455,7 @@ public class Main
 //        shellSort();
 //        heapSort(); //Ok - falta complexidade
         quickSortI();
-//        quickSortII();
+        quickSortII();
 //        mergeI();
 //        mergeII();
 //        counting();
