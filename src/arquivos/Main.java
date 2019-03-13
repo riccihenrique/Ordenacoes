@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 
 public class Main 
 {
-    static final int n = 8;
+    static final int n = 10;
     private Arquivo ordenado, reverso, randomico, auxreverso, auxrandomico;
     private FileWriter txt;
     private PrintWriter escritor;
@@ -435,7 +435,7 @@ public class Main
         lrandomica.geraRandomica();
         
         lrandomica.exibeLista(); System.out.println("");
-        lrandomica.bolha();
+        lrandomica.insercao_binaria();
         lrandomica.exibeLista();
     }
     

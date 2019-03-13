@@ -77,12 +77,19 @@ public class Lista
     }
     
     public void geraRandomica()
-    {
+    {       
+//        insereFim(new No(9, null, null));
+//        insereFim(new No(6, null, null));
+//        insereFim(new No(3, null, null));
+//        insereFim(new No(2, null, null));
+//        insereFim(new No(7, null, null));
+        
+        
         Random r = new Random();
         int i;
         for(i = 0; i < Main.n; i++)
         {
-            No aux = new No(r.nextInt(1200), null, null);
+            No aux = new No(r.nextInt(10), null, null);
             insereFim(aux);
         }
     }
@@ -120,27 +127,65 @@ public class Lista
         
         while(i != null)
         {
-            pos = buscaBinaria(i.getCod(), i);
-            
-            while(pos != i)
+            pos = buscaBinaria(i.getCod(), i.getAnt());
+            j = i;
+            while(pos != j)
             {
-                permutacao(pos, pos.getAnt());
-                pos = localizaNo(pos, -1);
+                permutacao(j, j.getAnt());
+                j = localizaNo(j, -1);
             }
+            permutacao(pos, j);
             i = localizaNo(i, 1);
         }
     }
     
-    private No buscaBinaria(int cod, No fim)
+    private No buscaBinaria(int cod, No tl)
     {
-        No ini = inicio, meio = null;
-        
-        while(ini != meio)
-        {            
+        No ini = inicio, meio, fim = tl;
+        int pos = (lenLista(inicio, fim ) - 1) / 2;
+        boolean flag;
+        if(pos == 0)
+            meio = ini;
+        else
+            meio = localizaNo(ini, pos);
             
+        
+        while(ini != meio && meio.getCod() != cod)
+        {            
+            if(cod < meio.getCod())
+            {
+                fim = meio;
+                flag = true;
+            }
+            else
+            {
+                flag = false;
+                ini = meio;
+            }
+            
+            pos = lenLista(ini, fim) / 2;
+        
+            
+            
+            if(pos == 0)
+                meio = ini;
+            else
+                if(flag)
+                {
+                    pos *= -1;
+                    meio = localizaNo(fim, pos);
+                }
+            else
+                   meio = localizaNo(ini, pos);  
         }
         
-        return null;
+        if(cod > tl.getCod())
+            return tl;
+        
+        if(cod > meio.getCod())
+            return meio.getProx();
+        
+        return meio;
     }
     
     public void selecao_direta()
@@ -218,7 +263,41 @@ public class Lista
     
     public void heap()
     {
+        int n, tl = 0;
+        No pai, fd, fe, fmaior, fim = inicio;
         
+        while(fim.getProx() != null)
+        {
+            fim = fim.getProx();
+            tl++;
+        }
+        tl ++;
+        
+        while(fim != inicio)
+        {
+            for(n = tl / 2 - 1; n >= 0; n--)
+            {
+                if(n == 0)
+                    pai = inicio;
+                else                    
+                    pai = localizaNo(inicio, n);
+                fe = localizaNo(inicio, n + n + 1);
+                fd = localizaNo(fe, 1);
+
+                fmaior = fe;
+
+                if(n + n + 2 < tl && fd.getCod() > fe.getCod())
+                    fmaior = fd;
+
+                if(fmaior.getCod() > pai.getCod())
+                    permutacao(pai, fmaior);
+            }
+            
+            permutacao(inicio, fim);
+            
+            tl--;
+            fim = fim.getAnt();
+        }
     }
     
     public void shell()
@@ -264,12 +343,7 @@ public class Lista
     
     public void quick1()
     {
-        No aux = inicio;
-        
-        while(aux.getProx() != null)
-            aux = aux.getProx();
-        
-        quicksp(inicio, aux);
+        quicksp(inicio, localizaNo(inicio, 0));
     }
     
     private void quicksp(No ini, No fim)
@@ -288,16 +362,51 @@ public class Lista
             permutacao(i, j);
         }
         
-        if(i.getAnt() != null &&ini != i.getAnt())
-            quicksp(ini, i.getAnt());
-        if(j.getProx() != null && fim != j.getProx())
-            quicksp(j.getProx(), fim);
+        if(j.getAnt() != null && j != ini && ini != j.getAnt())
+            quicksp(ini, j.getAnt());
+        if(i.getProx() != null && i != fim && fim != i.getProx())
+            quicksp(i.getProx(), fim);
+    }
+    
+    public void quick2()
+    {       
+        quickcp(inicio, localizaNo(inicio, 0));
+    }
+    
+    private void quickcp(No ini, No fim)
+    {
+        No i = ini, j = fim, pivo;
+        int pos = lenLista(ini, fim); 
+        if(pos == 0)
+            pivo = inicio;
+        else
+            pivo = localizaNo(ini, pos / 2);
+        
+        while(i != j)
+        {
+            while(i.getCod() < pivo.getCod())
+                i = localizaNo(i, 1);
+            
+            while(j.getCod() > pivo.getCod())
+                j = localizaNo(j, -1);
+            
+            permutacao(i, j);
+            
+            i = localizaNo(i, 1);
+            if(i != j)
+                j = localizaNo(j, -1);
+        }
+        
+        if(j.getAnt() != null && j != ini && ini != j.getAnt())
+            quickcp(ini, j.getAnt());
+        if(i.getProx() != null && i != fim && fim != i.getProx())
+            quickcp(i.getProx(), fim);
         
     }
     
     private No localizaNo(No no, int qntd)
     {
-        if(qntd == 0) //Posicionar no fim da fila
+        if(qntd == 0) //Posicionar no fim da lista
         {
             while(no.getProx() != null)
                 no = no.getProx();
@@ -321,11 +430,25 @@ public class Lista
         return no;
     }
     
-    public void permutacao(No no1, No no2)
+    private void permutacao(No no1, No no2)
     {
         No aux = new No(no1.getCod(), null, null);
         
         no1.setCod(no2.getCod());
         no2.setCod(aux.getCod());
+    }
+    
+    private int lenLista(No l1, No l2)
+    {
+        int i = 0;
+        if(l1 != l2)
+            i++;
+        while(l1 != l2)
+        {
+            l1 = l1.getProx();
+            i++;
+        }
+        
+        return i;
     }
 }
