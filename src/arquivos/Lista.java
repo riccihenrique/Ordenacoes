@@ -392,7 +392,8 @@ public class Lista
             
             permutacao(i, j);
             
-            i = localizaNo(i, 1);
+            if(i != j)
+                i = localizaNo(i, 1);
             if(i != j)
                 j = localizaNo(j, -1);
         }
