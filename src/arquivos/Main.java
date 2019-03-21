@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 
 public class Main 
 {
-    static final int n = 10;
+    static final int n = 8;
     private Arquivo ordenado, reverso, randomico, auxreverso, auxrandomico;
     private FileWriter txt;
     private PrintWriter escritor;
@@ -34,15 +34,15 @@ public class Main
     
     private void escreveCabecalho()
     {
-        escritor.write("|MÉTODOS DE ORDENAÇÃO|ARQUIVO ORDENADO\t\t\t|ARQUIVO EM ORDEM REVERSA\t     "
-                + "|ARQUIVO RANDÔMICO\n");
-        escritor.write("|\t\t     |Comp. 1|Comp. 2|Mov. 1|Mov. 2|Tempo|Comp. 1|Comp. 2|Mov. 1|Mov. 2|Tempo|"
-                + "Comp. 1|Comp. 2|Mov. 1|Mov. 2|Tempo|\n");
+        escritor.println("|MÉTODOS DE ORDENAÇÃO|ARQUIVO ORDENADO\t\t\t|ARQUIVO EM ORDEM REVERSA\t     "
+                + "|ARQUIVO RANDÔMICO");
+        escritor.println("|\t\t     |Comp. 1\t|Comp. 2|Mov. 1\t|Mov. 2\t|Tempo\t|Comp. 1|Comp. 2|Mov. 1|Mov. 2\t|Tempo\t|"
+                + "Comp. 1|Comp. 2|Mov. 1\t|Mov. 2\t|Tempo|");
     }
     
     private void escreveTabela(String nomeMetodo, int cp, double ce, int mp, double me, double tempo)
     {
-        escritor.printf("%s %d  | %.0f | %d | %.0f  | %.0f ||", nomeMetodo, cp, ce, mp, me, tempo);
+        escritor.printf("%s %d\t| %.0f\t| %d\t| %.0f\t| %.0f\t|", nomeMetodo, cp, ce, mp, me, tempo);
     }
     
     private void insertionSort()
@@ -79,7 +79,7 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, (Math.pow(n, 2) + n - 2) / 4, mov, (Math.pow(n, 2) + 9 * n - 10) / 4, tfim - tini);
-        escritor.write("\n");
+        escritor.println("\n");
     }
     
     private void binaryInsertion()
@@ -116,7 +116,7 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, n * (Math.log(n)), mov, (Math.pow(n, 2) + 9 * n - 10) / 2 , tfim - tini);
-        escritor.write("\n");
+        escritor.println("\n");
     }
     
     private void selectionSort()
@@ -153,7 +153,7 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, (Math.pow(n, 2)- n) / 2, mov, n * (Math.log((double) n) + 0.577216f), tfim - tini);
-        escritor.write("\n");
+        escritor.println("\n");
     }
     
     private void bubbleSort()
@@ -190,7 +190,7 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, (Math.pow(n, 2)- n) / 2, mov, n * (Math.log((double) n) + 0.577216f) , tfim - tini);
-        escritor.write("\n");
+        escritor.println("\n");
     }
     
     private void shakeSort()
@@ -227,7 +227,7 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, (Math.pow(n, 2) - n) / 2, mov, 3 * (Math.pow(n, 2) - n) / 2, tfim - tini);
-        escritor.write("\n");
+        escritor.println("\n");
     }
     
     private void shellSort()
@@ -264,7 +264,7 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, (Math.pow(n, 2)- n) / 2, mov, n * (Math.log((double) n) + 0.577216f) , tfim - tini);
-        escritor.write("\n");
+        escritor.println("\n");
     }
     
     private void heapSort()
@@ -301,7 +301,7 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, (Math.pow(n, 2)- n) / 2, mov, n * (Math.log((double) n) + 0.577216f) , tfim - tini);
-        escritor.write("\n");
+        escritor.println("\n");
     }
         
     private void quickSortI()
@@ -338,7 +338,7 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, (Math.pow(n, 2)- n) / 2, mov, n * (Math.log((double) n) + 0.577216f) , tfim - tini);
-        escritor.write("\n");
+        escritor.println("\n");
     }
     
     private void quickSortII()
@@ -375,17 +375,83 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, (Math.pow(n, 2)- n) / 2, mov, n * (Math.log((double) n) + 0.577216f) , tfim - tini);
-        escritor.write("\n"); 
+        escritor.println("\n"); 
     }
     
     private void mergeI()
     {
+        //MERGE 1ª Implementação
+        //Arquivo Odernado
+        ordenado.initComp();
+        ordenado.initMov();
+        tini = (int) System.currentTimeMillis();
+        ordenado.merge1();
+        tfim = (int) System.currentTimeMillis();
+        com = ordenado.getComp();
+        mov = ordenado.getMov();
+        escreveTabela("|Merge 1\t     |", com, (Math.pow(n, 2)- n) / 2, mov, 3 * (n - 1) , tfim - tini);
         
+        //Arquivo Reverso
+        auxreverso.copiaArquivo(reverso.getFile());
+        auxreverso.initComp();
+        auxreverso.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxreverso.merge1();
+        tfim = (int) System.currentTimeMillis();
+        com = auxreverso.getComp();
+        mov = auxreverso.getMov();
+        escreveTabela("", com, (Math.pow(n, 2)- n) / 2, mov, Math.pow(n, 2) / (4 + 3 * (n - 1)) , tfim - tini);
+        
+        //Arquivo Randômico
+        auxrandomico.copiaArquivo(randomico.getFile());
+        auxrandomico.initComp();
+        auxrandomico.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxrandomico.merge1();
+        tfim = (int) System.currentTimeMillis();
+        com = auxrandomico.getComp();
+        mov = auxrandomico.getMov();
+        escreveTabela("", com, (Math.pow(n, 2)- n) / 2, mov, n * (Math.log((double) n) + 0.577216f) , tfim - tini);
+        escritor.println("\n"); 
+
     }
     
     private void mergeII()
     {
+        //MERGE 2ª Implementação
+        //Arquivo Odernado
+        ordenado.initComp();
+        ordenado.initMov();
+        tini = (int) System.currentTimeMillis();
+        ordenado.merge2();
+        tfim = (int) System.currentTimeMillis();
+        com = ordenado.getComp();
+        mov = ordenado.getMov();
+        escreveTabela("|Merge 2\t     |", com, -1, mov, -1, tfim - tini);
         
+        //Arquivo Reverso
+        auxreverso.copiaArquivo(reverso.getFile());
+        auxreverso.initComp();
+        auxreverso.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxreverso.merge2();
+        tfim = (int) System.currentTimeMillis();
+        com = auxreverso.getComp();
+        mov = auxreverso.getMov();
+        escreveTabela("", com, -1, mov, -1, tfim - tini);
+        
+        //Arquivo Randômico
+        auxrandomico.copiaArquivo(randomico.getFile());
+        auxrandomico.initComp();
+        auxrandomico.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxrandomico.merge2();
+        tfim = (int) System.currentTimeMillis();
+        com = auxrandomico.getComp();
+        mov = auxrandomico.getMov();
+        escreveTabela("", com, -1, mov, -1, tfim - tini);
+        escritor.println("\n"); 
+
     }
     
     private void counting()
@@ -435,7 +501,7 @@ public class Main
         lrandomica.geraRandomica();
         
         lrandomica.exibeLista(); System.out.println("");
-        lrandomica.insercao_binaria();
+        lrandomica.merge1();
         lrandomica.exibeLista();
     }
     
@@ -447,17 +513,17 @@ public class Main
         reverso.geraArquivoReverso();
         randomico.geraArquivoRandomico();
         
-//        insertionSort(); //OK
-//        binaryInsertion(); //OK
-//        selectionSort(); //OK
-//        bubbleSort(); //Ok - falta complexidade
-//        shakeSort(); //Ok
-//        shellSort();
-//        heapSort(); //Ok - falta complexidade
-//        quickSortI();
-//        quickSortII();
-//        mergeI();
-//        mergeII();
+        insertionSort(); //OK
+        binaryInsertion(); //OK
+        selectionSort(); //OK
+        bubbleSort(); //Ok - falta complexidade
+        shakeSort(); //Ok
+        shellSort();
+        heapSort(); //Ok - falta complexidade
+        quickSortI();
+        quickSortII();
+        //mergeI();
+        //mergeII();
 //        counting();
 //        bucket();
 //        radix();
@@ -474,7 +540,7 @@ public class Main
     public static void main(String[] args) throws IOException
     {
         Main m = new Main();
-        //m.gerarTabela();
-        m.geraLista();
+        m.gerarTabela();
+        //m.geraLista();
     }
 }

@@ -37,7 +37,7 @@ public class Arquivo
                 i++;
             }
         }
-        catch(Exception e)
+        catch(IOException e)
         {
 
         }
@@ -76,7 +76,7 @@ public class Arquivo
         {
             return (int) (arquivo.length() / Registro.length());
         }
-        catch(Exception e)
+        catch(IOException e)
         {
             return -1;
         }
@@ -121,8 +121,42 @@ public class Arquivo
         }
         catch (IOException e){ }
     }
+    
+    // Geração de arquivos aleatórios
+    
+    public void geraArquivoOrdenado()
+    {
+        int i;
+        for(i = 0; i < Main.n; i++)
+        {
+            Registro reg = new Registro(i);
+            reg.gravaNoArq(arquivo);
+        }
+    }
+
+    public void geraArquivoReverso()
+    {
+        int i;
+        for(i = 0; i < Main.n; i++)
+        {
+            Registro reg = new Registro(Main.n - i - 1);
+            reg.gravaNoArq(arquivo);
+        }
+    }
+
+    public void geraArquivoRandomico()
+    {
+        Random rand = new Random();
+        int i;
+        for(i = 0; i < Main.n; i++)
+        {
+            Registro reg = new Registro(rand.nextInt(1200));
+            reg.gravaNoArq(arquivo);
+        }
+    }    
 
     // Métodos de Ordenação
+    
     public void selecao_direta()
     {
         Registro aux = new Registro(), reg = new Registro();
@@ -592,34 +626,149 @@ public class Arquivo
 
     }
 
-    public void geraArquivoOrdenado()
+    public void merge1()
     {
-        int i;
-        for(i = 0; i < Main.n; i++)
+        int seq = 1, tl = filesize(), meio = tl / 2;
+        int i = 0, j = 0, k = 0, aux_seq = seq, aux_seq2 = seq;
+        Registro[] vet1 = new Registro[tl / 2];
+        Registro[] vet2 = new Registro[tl / 2];
+        Registro reg1, reg2;
+        
+        while(seq < tl)
         {
-            Registro reg = new Registro(i);
-            reg.gravaNoArq(arquivo);
+            //Partição ---------------------------------------------------------
+           
+            for(i = 0; i < meio; i++)
+            {
+                reg1 = new Registro();
+                reg2 = new Registro();
+                
+                seekArq(i);
+                reg1.leDoArq(arquivo);
+                seekArq(i + meio);
+                reg2.leDoArq(arquivo);
+
+                vet1[i] = reg1;
+                vet2[i] = reg2;
+            }
+            //------------------------------------------------------------------
+            // Fusão -----------------------------------------------------------
+            k = i = j = 0;
+            aux_seq = seq;
+            aux_seq2 = seq;
+            while(k < tl)
+            {
+                while(i < aux_seq2 && j < aux_seq2)
+                {
+                    comp++;
+                    if(vet1[i].getCodigo() < vet2[j].getCodigo())
+                    {
+                        mov++;
+                        seekArq(k);
+                        vet1[i].gravaNoArq(arquivo);
+                        i++;
+                    }
+                    else
+                    {
+                        mov++;
+                        seekArq(k);
+                        vet2[j].gravaNoArq(arquivo);
+                        j++;
+                    }
+                    k++;
+                }
+
+                while(i < aux_seq2)
+                {
+                    mov++;
+                    seekArq(k);
+                    vet1[i].gravaNoArq(arquivo);
+                    i++; k++;
+                }
+
+                while(j < aux_seq2)
+                {
+                    mov++;
+                    seekArq(k);
+                    vet2[j].gravaNoArq(arquivo);
+                    j++; k++;
+                }
+
+                aux_seq2 += aux_seq;
+            }
+            //------------------------------------------------------------------
+            seq += seq;
         }
     }
-
-    public void geraArquivoReverso()
+    
+    public void merge2()
+    {        
+        merge_2(new Registro[filesize()], 0, filesize());
+    }
+    
+    private void merge_2(Registro[] aux, int esq, int dir)
     {
-        int i;
-        for(i = 0; i < Main.n; i++)
+        int meio;
+        
+        if(esq < dir)
         {
-            Registro reg = new Registro(Main.n - i - 1);
-            reg.gravaNoArq(arquivo);
+            meio = (esq + dir) / 2;
+            merge_2(aux, esq, meio);
+            merge_2(aux, meio + 1, dir);
+            fusao(aux, esq, meio, meio + 1, dir);
         }
     }
-
-    public void geraArquivoRandomico()
+    
+    private void fusao(Registro[] aux, int ini1, int fim1, int ini2, int fim2)
     {
-        Random rand = new Random();
-        int i;
-        for(i = 0; i < Main.n; i++)
+        int k = 0, i = ini1, j = ini2;
+        Registro reg1, reg2;
+        while(i <= fim1 && j <= fim2)
         {
-            Registro reg = new Registro(rand.nextInt(1200));
-            reg.gravaNoArq(arquivo);
+            reg1 = new Registro();
+            reg2 = new Registro();
+            
+            seekArq(i);
+            reg1.leDoArq(arquivo);
+            seekArq(j);
+            reg2.leDoArq(arquivo);
+            
+            if(reg1.getCodigo() < reg2.getCodigo())
+            {
+                aux[k] = reg1;
+                i++;
+            }
+            else
+            {
+                aux[k] = reg2;
+                j++;
+            }
+            k++;
+        }
+        
+        while(i <= fim1)
+        {
+            seekArq(i);
+            reg1 = new Registro();
+            reg1.leDoArq(arquivo);
+            
+            aux[k] = reg1;
+            k++; i++;
+        }
+        
+        while(j <= fim2)
+        {
+            seekArq(j);
+            reg2 = new Registro();
+            reg2.leDoArq(arquivo);
+            
+            aux[k] = reg2;
+            k++; j++;
+        }
+        
+        for(i = 0; i < k; i++)
+        {
+            aux[i + ini1].gravaNoArq(arquivo);
         }
     }
 }

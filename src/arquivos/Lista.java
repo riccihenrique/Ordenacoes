@@ -402,7 +402,61 @@ public class Lista
             quickcp(ini, j.getAnt());
         if(i.getProx() != null && i != fim && fim != i.getProx())
             quickcp(i.getProx(), fim);
-        
+    }
+    
+    public void merge1()
+    {
+        int tl = lenLista(inicio, null), seq = 1, aux_seq = seq, aux_seq1 = seq;
+        int i, meio = tl / 2, k, j;
+        No[] vet1 = new No[tl / 2], vet2 = new No[tl / 2];
+        while(seq < tl)
+        {
+            for(i = 0; i < meio; i++)
+            {
+                if(i == 0)
+                    vet1[i] = inicio;
+                else
+                    vet1[i] = localizaNo(inicio, i);
+                
+                vet2[i] = localizaNo(inicio, i + meio);
+            }
+            
+            aux_seq = aux_seq1 = seq;
+            i = k = j = 0;
+            inicio = null;
+            while(aux_seq < tl)
+            {
+                while(i < aux_seq && j < aux_seq)
+                {
+                    if(vet1[i].getCod() < vet2[j].getCod())
+                    {
+                        insereFim(vet1[i]);
+                        i++;
+                    }
+                    else
+                    {
+                        insereFim(vet2[j]);
+                        j++;
+                    }
+                }
+                
+                while(i < aux_seq)
+                {
+                    insereFim(vet1[i]);
+                    i++;
+                }
+                
+                while(j < aux_seq)
+                {
+                    insereFim(vet2[j]);
+                    j++;
+                }
+                
+                aux_seq += aux_seq1;
+            }
+            
+            seq += seq;
+        }
     }
     
     private No localizaNo(No no, int qntd)
@@ -444,7 +498,7 @@ public class Lista
         int i = 0;
         if(l1 != l2)
             i++;
-        while(l1 != l2)
+        while(l1.getProx() != l2)
         {
             l1 = l1.getProx();
             i++;
