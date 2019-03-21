@@ -771,4 +771,26 @@ public class Arquivo
             aux[i + ini1].gravaNoArq(arquivo);
         }
     }
+    
+    public void coutingSort()
+    {
+        int range = Main.n, TL = filesize(), i;
+        Registro reg = new Registro();
+        
+        int count[] = new int[range];
+        
+        seekArq(0);
+        for(i = 0; i < TL; i++)
+        {
+            reg.leDoArq(arquivo);
+            count[reg.getCodigo()]++;
+        }
+        
+        for(i = 1; i <= range; i++)
+            count[i] = count[i - 1];
+        count[0] = 0;
+        
+        
+    }
+
 }
