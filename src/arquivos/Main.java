@@ -456,7 +456,39 @@ public class Main
     
     private void counting()
     {
+        //Counting
+        //Arquivo Odernado
+        ordenado.initComp();
+        ordenado.initMov();
+        tini = (int) System.currentTimeMillis();
+        ordenado.countingSort();
+        tfim = (int) System.currentTimeMillis();
+        com = ordenado.getComp();
+        mov = ordenado.getMov();
+        escreveTabela("|CountingSort\t     |", com, -1, mov, -1, tfim - tini);
         
+        //Arquivo Reverso
+        auxreverso.copiaArquivo(reverso.getFile());
+        auxreverso.initComp();
+        auxreverso.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxreverso.countingSort();
+        tfim = (int) System.currentTimeMillis();
+        com = auxreverso.getComp();
+        mov = auxreverso.getMov();
+        escreveTabela("", com, -1, mov, -1, tfim - tini);
+        
+        //Arquivo Randômico
+        auxrandomico.copiaArquivo(randomico.getFile());
+        auxrandomico.initComp();
+        auxrandomico.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxrandomico.countingSort();
+        tfim = (int) System.currentTimeMillis();
+        com = auxrandomico.getComp();
+        mov = auxrandomico.getMov();
+        escreveTabela("", com, -1, mov, -1, tfim - tini);
+        escritor.println("\n"); 
     }
     
     private void bucket()
@@ -513,18 +545,18 @@ public class Main
         reverso.geraArquivoReverso();
         randomico.geraArquivoRandomico();
         
-        insertionSort(); //OK
-        binaryInsertion(); //OK
-        selectionSort(); //OK
-        bubbleSort(); //Ok - falta complexidade
-        shakeSort(); //Ok
-        shellSort();
-        heapSort(); //Ok - falta complexidade
-        quickSortI();
-        quickSortII();
+//        insertionSort(); //OK;;;;;;;
+//        binaryInsertion(); //OK
+//        selectionSort(); //OK
+//        bubbleSort(); //Ok - falta complexidade
+//        shakeSort(); //Ok
+//        shellSort();
+//        heapSort(); //Ok - falta complexidade
+//        quickSortI();
+//        quickSortII();
         //mergeI();
         //mergeII();
-//        counting();
+          counting();
 //        bucket();
 //        radix();
 //        comb();

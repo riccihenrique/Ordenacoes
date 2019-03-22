@@ -772,25 +772,39 @@ public class Arquivo
         }
     }
     
-    public void coutingSort()
+    public void countingSort()
     {
-        int range = Main.n, TL = filesize(), i;
+        int range = Main.n, TL = filesize(), i, aux;
         Registro reg = new Registro();
+        Registro aux_arq[] = new Registro[TL];
         
         int count[] = new int[range];
         
-        seekArq(0);
+        //contar os elementos
         for(i = 0; i < TL; i++)
         {
+            seekArq(i);
             reg.leDoArq(arquivo);
             count[reg.getCodigo()]++;
         }
         
-        for(i = 1; i <= range; i++)
-            count[i] = count[i - 1];
-        count[0] = 0;
+        //arrumar o vetor de contador
+        for(i = 1; i < range - 1; i++)
+            count[i + 1] = count[i];
         
+        //ordenando em um array auxiliar
+        for(i = TL - 1; i >= 0; i--)
+        {
+            seekArq(i);
+            reg.leDoArq(arquivo);
+            aux_arq[count[reg.getCodigo()] - 1] = reg;
+            count[reg.getCodigo()]--;
+        } 
         
+        //gravando no arquivo
+        seekArq(0);
+        for(i = 0; i < TL; i++)
+            aux_arq[i].gravaNoArq(arquivo);
     }
 
 }
