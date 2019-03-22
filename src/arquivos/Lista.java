@@ -78,20 +78,20 @@ public class Lista
     
     public void geraRandomica()
     {       
-//        insereFim(new No(9, null, null));
-//        insereFim(new No(6, null, null));
-//        insereFim(new No(3, null, null));
-//        insereFim(new No(2, null, null));
-//        insereFim(new No(7, null, null));
+        insereFim(new No(9, null, null));
+        insereFim(new No(6, null, null));
+        insereFim(new No(3, null, null));
+        insereFim(new No(2, null, null));
+        insereFim(new No(7, null, null));
         
-        
-        Random r = new Random();
-        int i;
-        for(i = 0; i < Main.n; i++)
-        {
-            No aux = new No(r.nextInt(10), null, null);
-            insereFim(aux);
-        }
+//        
+//        Random r = new Random();
+//        int i;
+//        for(i = 0; i < Main.n; i++)
+//        {
+//            No aux = new No(r.nextInt(10), null, null);
+//            insereFim(aux);
+//        }
     }
     
     //Métodos de Ordenação
@@ -142,7 +142,7 @@ public class Lista
     private No buscaBinaria(int cod, No tl)
     {
         No ini = inicio, meio, fim = tl;
-        int pos = (lenLista(inicio, fim ) - 1) / 2;
+        int pos = lenLista(inicio, fim ) / 2;
         boolean flag;
         if(pos == 0)
             meio = ini;
@@ -495,9 +495,10 @@ public class Lista
     
     private int lenLista(No l1, No l2)
     {
-        int i = 0;
-        if(l1 != l2)
-            i++;
+        int i = 1;
+        if(l1 == l2)
+            return 0;
+        
         while(l1.getProx() != l2)
         {
             l1 = l1.getProx();
