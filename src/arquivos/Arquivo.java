@@ -806,5 +806,45 @@ public class Arquivo
         for(i = 0; i < TL; i++)
             aux_arq[i].gravaNoArq(arquivo);
     }
-
+    
+    public void gnome()
+    {
+        int i = 0, tl = filesize(), j;
+        Registro reg1 = new Registro(), reg2 = new Registro();
+        
+        for(i = 0; i < tl - 1; i++)
+        {
+            seekArq(i);
+            reg1.leDoArq(arquivo);
+            reg2.leDoArq(arquivo);
+            
+            comp++;
+            if(reg1.getCodigo() > reg2.getCodigo())
+            {
+                j = i;
+                
+                comp++;
+                while(j >= 0 && reg2.getCodigo() < reg1.getCodigo())
+                {
+                    mov += 2;
+                    seekArq(j);
+                    reg2.gravaNoArq(arquivo);
+                    reg1.gravaNoArq(arquivo);
+                    
+                    j--;
+                    if(j >= 0)
+                    {
+                        seekArq(j);
+                        reg1.leDoArq(arquivo);
+                        reg2.leDoArq(arquivo);
+                    }
+                }
+            }
+        }
+    }
+    
+    public void bucket()
+    {
+        
+    }
 }
