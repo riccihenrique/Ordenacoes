@@ -1,4 +1,0 @@
-|MÉTODOS DE ORDENAÇÃO|ARQUIVO ORDENADO			|ARQUIVO EM ORDEM REVERSA	     |ARQUIVO RANDÔMICO
-|		     |Comp. 1	|Comp. 2|Mov. 1	|Mov. 2	|Tempo	|Comp. 1|Comp. 2|Mov. 1	|Mov. 2	|Tempo	|Comp. 1|Comp. 2|Mov. 1	|Mov. 2	|Tempo	|
-|Gnome Sort	     | 14	| -1	| 0	| -1	| 307	| 28	| -1	| 210	| -1	| 5676	| 28	| -1	| 144	| -1	| 2960	|
-

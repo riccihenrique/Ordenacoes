@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 
 public class Main 
 {
-    static final int n = 15;
+    static final int n = 7;
     private Arquivo ordenado, reverso, randomico, auxreverso, auxrandomico;
     private FileWriter txt;
     private PrintWriter escritor;
@@ -498,7 +498,39 @@ public class Main
    
     private void radix()
     {
+        //Radix
+        //Arquivo Odernado
+        ordenado.initComp();
+        ordenado.initMov();
+        tini = (int) System.currentTimeMillis();
+        ordenado.radix();
+        tfim = (int) System.currentTimeMillis();
+        com = ordenado.getComp();
+        mov = ordenado.getMov();
+        escreveTabela("|Radix\t     |", com, -1, mov, -1, tfim - tini);
         
+        //Arquivo Reverso
+        auxreverso.copiaArquivo(reverso.getFile());
+        auxreverso.initComp();
+        auxreverso.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxreverso.radix();
+        tfim = (int) System.currentTimeMillis();
+        com = auxreverso.getComp();
+        mov = auxreverso.getMov();
+        escreveTabela("", com, -1, mov, -1, tfim - tini);
+        
+        //Arquivo Randômico
+        auxrandomico.copiaArquivo(randomico.getFile());
+        auxrandomico.initComp();
+        auxrandomico.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxrandomico.radix();
+        tfim = (int) System.currentTimeMillis();
+        com = auxrandomico.getComp();
+        mov = auxrandomico.getMov();
+        escreveTabela("", com, -1, mov, -1, tfim - tini);
+        escritor.println("\n"); 
     }
     
     private void comb()
@@ -588,11 +620,11 @@ public class Main
 //        quickSortII();
         //mergeI();
         //mergeII();
-          //counting();
+        //counting();
         //bucket();
-//        radix();
+          radix();
 //        comb();
-       gnome();
+        //gnome();
 //        tim();
 
         ordenado.exibirArq(); System.out.println("");
