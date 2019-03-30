@@ -845,7 +845,39 @@ public class Arquivo
     
     public void bucket()
     {
+        Registro mat[][] = new Registro[10][Main.n];
+        int[] index = new int[10];
+        Registro reg;
+        int i, tl = filesize(), j, k;
         
+        // Insere os elementos na lista
+        for(i = 0; i < tl; i++)
+        {
+            reg = new Registro();
+            seekArq(i);
+            reg.leDoArq(arquivo);
+            mat[(int) ((reg.getCodigo() / (float) Main.n) * 10)][index[(int) ((reg.getCodigo() / (float) Main.n) * 10)]++] = reg;
+        }
+        
+        seekArq(0);
+        for(i = 0; i < 10; i++)
+        {
+            j = 1;
+            while(j < index[i])
+            {
+                k = j;
+                while(mat[i][k].getCodigo() > mat[i][k - 1].getCodigo())
+                {
+                    reg = mat[i][k];
+                    mat[i][k] = mat[i][k - 1];
+                    mat[i][k - 1] = reg;
+                }
+                j++;
+            }
+            
+            for(j = 0; j < index[i]; j++)
+                mat[i][j].gravaNoArq(arquivo);
+        }
     }
     
     public void radix()
