@@ -567,7 +567,39 @@ public class Main
     
     private void comb()
     {
+        //Comb
+        //Arquivo Odernado
+        ordenado.initComp();
+        ordenado.initMov();
+        tini = (int) System.currentTimeMillis();
+        ordenado.comb();
+        tfim = (int) System.currentTimeMillis();
+        com = ordenado.getComp();
+        mov = ordenado.getMov();
+        escreveTabela("|Comb\t     |", com, -1, mov, -1, tfim - tini);
         
+        //Arquivo Reverso
+        auxreverso.copiaArquivo(reverso.getFile());
+        auxreverso.initComp();
+        auxreverso.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxreverso.comb();
+        tfim = (int) System.currentTimeMillis();
+        com = auxreverso.getComp();
+        mov = auxreverso.getMov();
+        escreveTabela("", com, -1, mov, -1, tfim - tini);
+        
+        //Arquivo Randômico
+        auxrandomico.copiaArquivo(randomico.getFile());
+        auxrandomico.initComp();
+        auxrandomico.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxrandomico.comb();
+        tfim = (int) System.currentTimeMillis();
+        com = auxrandomico.getComp();
+        mov = auxrandomico.getMov();
+        escreveTabela("", com, -1, mov, -1, tfim - tini);
+        escritor.println("\n"); 
     }
     
     private void gnome()
@@ -655,7 +687,7 @@ public class Main
 //        counting(); //Ok
 //        bucket(); //Ok
 //        radix(); //Ok
-//        comb();
+        comb();
         //gnome(); //Ok
 //        tim();
 

@@ -916,4 +916,31 @@ public class Arquivo
                 vet_aux[j].gravaNoArq(arquivo);
         }
     }
+    
+    public void comb()
+    {
+        int i = 0, tl = filesize(), fator = (int) (tl / 1.3);
+        Registro reg1 = new Registro(), reg2 = new Registro();
+        
+        while(fator > 0 && i != tl - 1)
+        {
+            i = 0;
+            while(i + fator < tl)
+            {
+                seekArq(i);
+                reg1.leDoArq(arquivo);
+                seekArq(fator + i);
+                reg2.leDoArq(arquivo);
+                if(reg1.getCodigo() > reg2.getCodigo())
+                {
+                    seekArq(i);
+                    reg2.gravaNoArq(arquivo);
+                    seekArq(fator + i);
+                    reg1.gravaNoArq(arquivo);
+                }
+                i++;
+            }
+            fator = (int) (fator / 1.3);
+        }
+    }
 }
