@@ -197,11 +197,16 @@ public class Arquivo
             reg.gravaNoArq(arquivo);
         }
     }
+    
+    public void insertionSort()
+    {
+        insercao_direta(0, filesize());
+    } 
 
-    public void insercao_direta()
+    private void insercao_direta(int ini, int fim)
     {
         Registro regaux = new Registro(), regpos1 = new Registro();
-        int i = 1, tl = filesize(), pos;
+        int i = ini + 1, tl = fim, pos;
 
         while(i < tl)
         {
@@ -733,6 +738,7 @@ public class Arquivo
             seekArq(j);
             reg2.leDoArq(arquivo);
             
+            comp++;
             if(reg1.getCodigo() < reg2.getCodigo())
             {
                 aux[k] = reg1;
@@ -768,6 +774,7 @@ public class Arquivo
         
         for(i = 0; i < k; i++)
         {
+            mov++;
             aux[i + ini1].gravaNoArq(arquivo);
         }
     }
@@ -804,7 +811,10 @@ public class Arquivo
         //gravando no arquivo
         seekArq(0);
         for(i = 0; i < TL; i++)
+        {
+            mov++;
             aux_arq[i].gravaNoArq(arquivo);
+        }
     }
     
     public void gnome()
@@ -837,6 +847,7 @@ public class Arquivo
                         seekArq(j);
                         reg1.leDoArq(arquivo);
                         reg2.leDoArq(arquivo);
+                        comp++;
                     }
                 }
             }
@@ -866,17 +877,22 @@ public class Arquivo
             while(j < index[i])
             {
                 k = j;
+                comp++;
                 while(mat[i][k].getCodigo() > mat[i][k - 1].getCodigo())
                 {
                     reg = mat[i][k];
                     mat[i][k] = mat[i][k - 1];
                     mat[i][k - 1] = reg;
+                    comp++;
                 }
                 j++;
             }
             
             for(j = 0; j < index[i]; j++)
+            {
+                mov++;
                 mat[i][j].gravaNoArq(arquivo);
+            }
         }
     }
     
@@ -913,7 +929,10 @@ public class Arquivo
             //gravar no arquivo
             seekArq(0);
             for(j = 0; j < TL; j++)
+            {
+                mov++;
                 vet_aux[j].gravaNoArq(arquivo);
+            }
         }
     }
     
@@ -931,8 +950,11 @@ public class Arquivo
                 reg1.leDoArq(arquivo);
                 seekArq(fator + i);
                 reg2.leDoArq(arquivo);
+                
+                comp++;
                 if(reg1.getCodigo() > reg2.getCodigo())
                 {
+                    mov += 2;
                     seekArq(i);
                     reg2.gravaNoArq(arquivo);
                     seekArq(fator + i);
@@ -942,5 +964,24 @@ public class Arquivo
             }
             fator = (int) (fator / 1.3);
         }
+    }
+    
+    public void tim()
+    {
+        int i, j, tl = filesize(), min = calculaMinRun(tl);
+        
+        
+    }
+    
+    private int calculaMinRun(int n)
+    {
+        int f = 0;
+        
+        while(n >= 64)
+        {
+            f = (f | n) & 1;
+            n++;
+        }
+        return f + n;
     }
 }
