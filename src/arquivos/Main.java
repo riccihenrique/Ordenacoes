@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 
 public class Main 
 {
-    static final int n = 7;
+    static final int n = 13;
     private Arquivo ordenado, reverso, randomico, auxreverso, auxrandomico;
     private FileWriter txt;
     private PrintWriter escritor;
@@ -596,9 +596,9 @@ public class Main
         lreversa.geraReversa();
         lrandomica.geraRandomica();
         
-        lreversa.exibeLista(); System.out.println("");
-        lreversa.insercao_binaria();
-        lreversa.exibeLista();
+        lrandomica.exibeLista(); System.out.println("");
+        lrandomica.quickSortS();
+        lrandomica.exibeLista();
     }
     
     public void gerarTabela() throws IOException

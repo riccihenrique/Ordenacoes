@@ -126,20 +126,20 @@ public class Arquivo
     
     public void geraArquivoOrdenado()
     {
-        int i;
-        for(i = 0; i < Main.n; i++)
+        int j;
+        for(j = 0; j < Main.n; j++)
         {
-            Registro reg = new Registro(i);
+            Registro reg = new Registro(j);
             reg.gravaNoArq(arquivo);
         }
     }
 
     public void geraArquivoReverso()
     {
-        int i;
-        for(i = 0; i < Main.n; i++)
+        int j;
+        for(j = 0; j < Main.n; j++)
         {
-            Registro reg = new Registro(Main.n - i - 1);
+            Registro reg = new Registro(Main.n - j - 1);
             reg.gravaNoArq(arquivo);
         }
     }
@@ -147,8 +147,8 @@ public class Arquivo
     public void geraArquivoRandomico()
     {
         Random rand = new Random();
-        int i;
-        for(i = 0; i < Main.n; i++)
+        int j;
+        for(j = 0; j < Main.n; j++)
         {
             Registro reg = new Registro(rand.nextInt(Main.n));
             reg.gravaNoArq(arquivo);
@@ -852,17 +852,20 @@ public class Arquivo
     {
         int i, j, max = Main.n, TL = filesize();
         Registro reg, vet_aux[] = new Registro[TL];
-        int count[] = new int[10];
+        int count[];
            
         seekArq(0);
         for(i = 1; i < max; i *= 10)
         {
+            count = new int[10];
+            
             //contando os elementos
+            seekArq(0);
             for(j = 0; j < TL; j++)
             {
                 reg = new Registro();
                 reg.leDoArq(arquivo);
-                count[reg.getCodigo() / i]++;
+                count[(reg.getCodigo() / i) % 10]++;
             }
             
             //arrumar o vetor de contador
@@ -873,9 +876,9 @@ public class Arquivo
             for(j = TL - 1; j >= 0; j--)
             {
                 reg = new Registro();
-                seekArq(j);
+                seekArq(j);     
                 reg.leDoArq(arquivo);
-                vet_aux[--count[reg.getCodigo() / i]] = reg;
+                vet_aux[--count[(reg.getCodigo() / i) % 10]] = reg;
             }
             
             //gravar no arquivo
