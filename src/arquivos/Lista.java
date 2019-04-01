@@ -2,19 +2,42 @@
 package arquivos;
 
 import java.util.Random;
+import java.util.Stack;
 
 public class Lista 
 {
-    private No inicio;
+    private No inicio, fim;
     
     public Lista()
     {
         inicio = null;
+        fim = null;
+    }
+
+    public Lista(No inicio, No fim) {
+        this.inicio = inicio;
+        this.fim = fim;
     }
     
     public No getLista()
     {
         return inicio;
+    }
+
+    public No getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(No inicio) {
+        this.inicio = inicio;
+    }
+
+    public No getFim() {
+        return fim;
+    }
+
+    public void setFim(No fim) {
+        this.fim = fim;
     }
     
     public void copiaLista(No l)
@@ -33,7 +56,10 @@ public class Lista
     private void insereFim(No novo)
     {
         if(inicio == null)
+        {
             inicio = novo;
+            fim = inicio;
+        }
         else
         {
             No aux = inicio;
@@ -42,6 +68,7 @@ public class Lista
             
             novo.setAnt(aux);
             aux.setProx(novo);
+            fim = novo;
         }
     }      
     
@@ -458,6 +485,116 @@ public class Lista
             seq += seq;
         }
     }
+    
+    public void quickSort() //sem pivo iterativo
+    {
+        Stack<Lista> stack_ =  new Stack<Lista>();
+        Lista l;
+        No i, j;
+        int aux;
+
+        stack_.push(new Lista(inicio, fim));
+        while(!stack_.isEmpty())
+        {
+            l = stack_.pop(); //carrega as informações da instancia
+
+            i = l.getInicio(); j = l.getFim();
+
+            while(i.getCod() != j.getCod())
+            {
+                while(i.getCod() != j.getCod() && i.getCod() <= j.getCod())
+                    i = i.getProx();
+
+                aux = i.getCod();
+                i.setCod(j.getCod());
+                j.setCod(aux);
+
+                while(i.getCod() != j.getCod() && j.getCod() >= i.getCod())
+                    j = j.getAnt();
+
+                aux = i.getCod();
+                i.setCod(j.getCod());
+                j.setCod(aux);
+            }
+
+            if(l.getInicio() != j.getAnt())
+                stack_.push(new Lista(l.getInicio(), j.getAnt()));
+            if(i.getProx() != l.getFim())
+                stack_.push(new Lista(i.getProx(), l.getFim()));
+        }
+    }
+    
+    public void quickSortS() //com pivo iterativo
+    {
+        Stack<Lista> stack_ =  new Stack<Lista>();
+        Lista l;
+        No i, j;
+        int pivo;
+        int aux;
+        boolean flag1 = false, flag2 = false;
+
+        stack_.push(new Lista(inicio, fim));
+        while(!stack_.isEmpty())
+        {
+            pivo = localizaNo(inicio, lenLista(inicio, fim) / 2).getCod();
+            l = stack_.pop(); //carrega as informações da instancia
+
+            i = l.getInicio(); j = l.getFim();
+
+            while(i != j)
+            {
+                while(i.getCod() < pivo)
+                    i = i.getProx();
+
+                while(j.getCod() > pivo)
+                    j = j.getAnt();
+
+                if(pos(i) <= pos(j))
+                {                    
+                    aux = i.getCod();
+                    i.setCod(j.getCod());
+                    j.setCod(aux);
+                    
+                    if(i != j)
+                    {
+                        i = i.getProx();
+                        flag1 = true;
+                    }
+                    else
+                        flag1= false;
+                    if(i != j)
+                    {
+                        j = j.getAnt();
+                        flag2 = true;
+                    } 
+                    else
+                        flag2 = false;
+                }
+            }
+            
+            if(!flag2)
+                j = j.getAnt();
+            if(!flag1)
+                i = i.getProx();
+
+            if(l.getInicio() != j)
+                stack_.push(new Lista(l.getInicio(), j));
+            if(i != l.getFim())
+                stack_.push(new Lista(i, l.getFim()));
+        }
+    }
+    
+    private int pos(No n)
+    {
+        int i = 0;
+        No a = inicio;
+        
+        for(i = 0; a != null && a != n; i++)
+            a = a.getProx();
+        
+        return i;
+    }
+            
     
     private No localizaNo(No no, int qntd)
     {

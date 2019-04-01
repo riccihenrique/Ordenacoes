@@ -52,7 +52,7 @@ public class Main
         ordenado.initComp();
         ordenado.initMov();
         tini = (int) System.currentTimeMillis();
-        ordenado.insercao_direta();
+        ordenado.insertionSort();
         tfim = (int) System.currentTimeMillis();
         com = ordenado.getComp();
         mov = ordenado.getMov();
@@ -63,7 +63,7 @@ public class Main
         auxreverso.initComp();
         auxreverso.initMov();
         tini = (int) System.currentTimeMillis();
-        auxreverso.insercao_direta();
+        auxreverso.insertionSort();
         tfim = (int) System.currentTimeMillis();
         com = auxreverso.getComp();
         mov = auxreverso.getMov();
@@ -74,7 +74,7 @@ public class Main
         auxrandomico.initComp();
         auxrandomico.initMov();
         tini = (int) System.currentTimeMillis();
-        auxrandomico.insercao_direta();
+        auxrandomico.insertionSort();
         tfim = (int) System.currentTimeMillis();
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
@@ -493,7 +493,39 @@ public class Main
     
     private void bucket()
     {
+        //Bucket
+        //Arquivo Odernado
+        ordenado.initComp();
+        ordenado.initMov();
+        tini = (int) System.currentTimeMillis();
+        ordenado.bucket();
+        tfim = (int) System.currentTimeMillis();
+        com = ordenado.getComp();
+        mov = ordenado.getMov();
+        escreveTabela("|Gnome Sort\t     |", com, -1, mov, -1, tfim - tini);
         
+        //Arquivo Reverso
+        auxreverso.copiaArquivo(reverso.getFile());
+        auxreverso.initComp();
+        auxreverso.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxreverso.bucket();
+        tfim = (int) System.currentTimeMillis();
+        com = auxreverso.getComp();
+        mov = auxreverso.getMov();
+        escreveTabela("", com, -1, mov, -1, tfim - tini);
+        
+        //Arquivo Randômico
+        auxrandomico.copiaArquivo(randomico.getFile());
+        auxrandomico.initComp();
+        auxrandomico.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxrandomico.bucket();
+        tfim = (int) System.currentTimeMillis();
+        com = auxrandomico.getComp();
+        mov = auxrandomico.getMov();
+        escreveTabela("", com, -1, mov, -1, tfim - tini);
+        escritor.println("\n"); 
     }
    
     private void radix()
@@ -535,7 +567,39 @@ public class Main
     
     private void comb()
     {
+        //Comb
+        //Arquivo Odernado
+        ordenado.initComp();
+        ordenado.initMov();
+        tini = (int) System.currentTimeMillis();
+        ordenado.comb();
+        tfim = (int) System.currentTimeMillis();
+        com = ordenado.getComp();
+        mov = ordenado.getMov();
+        escreveTabela("|Comb\t     |", com, -1, mov, -1, tfim - tini);
         
+        //Arquivo Reverso
+        auxreverso.copiaArquivo(reverso.getFile());
+        auxreverso.initComp();
+        auxreverso.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxreverso.comb();
+        tfim = (int) System.currentTimeMillis();
+        com = auxreverso.getComp();
+        mov = auxreverso.getMov();
+        escreveTabela("", com, -1, mov, -1, tfim - tini);
+        
+        //Arquivo Randômico
+        auxrandomico.copiaArquivo(randomico.getFile());
+        auxrandomico.initComp();
+        auxrandomico.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxrandomico.comb();
+        tfim = (int) System.currentTimeMillis();
+        com = auxrandomico.getComp();
+        mov = auxrandomico.getMov();
+        escreveTabela("", com, -1, mov, -1, tfim - tini);
+        escritor.println("\n"); 
     }
     
     private void gnome()
@@ -577,7 +641,39 @@ public class Main
     
     private void tim()
     {
+        //Tim
+        //Arquivo Odernado
+        ordenado.initComp();
+        ordenado.initMov();
+        tini = (int) System.currentTimeMillis();
+        ordenado.tim();
+        tfim = (int) System.currentTimeMillis();
+        com = ordenado.getComp();
+        mov = ordenado.getMov();
+        escreveTabela("|Tim Sort\t     |", com, -1, mov, -1, tfim - tini);
         
+        //Arquivo Reverso
+        auxreverso.copiaArquivo(reverso.getFile());
+        auxreverso.initComp();
+        auxreverso.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxreverso.tim();
+        tfim = (int) System.currentTimeMillis();
+        com = auxreverso.getComp();
+        mov = auxreverso.getMov();
+        escreveTabela("", com, -1, mov, -1, tfim - tini);
+        
+        //Arquivo Randômico
+        auxrandomico.copiaArquivo(randomico.getFile());
+        auxrandomico.initComp();
+        auxrandomico.initMov();
+        tini = (int) System.currentTimeMillis();
+        auxrandomico.tim();
+        tfim = (int) System.currentTimeMillis();
+        com = auxrandomico.getComp();
+        mov = auxrandomico.getMov();
+        escreveTabela("", com, -1, mov, -1, tfim - tini);
+        escritor.println("\n"); 
     }
     
     private void initLista()
@@ -609,27 +705,27 @@ public class Main
         reverso.geraArquivoReverso();
         randomico.geraArquivoRandomico();
         
-//        insertionSort(); //OK;;;;;;;
+//        insertionSort(); //OK
 //        binaryInsertion(); //OK
 //        selectionSort(); //OK
 //        bubbleSort(); //Ok - falta complexidade
 //        shakeSort(); //Ok
-//        shellSort();
+//        shellSort(); //Ok
 //        heapSort(); //Ok - falta complexidade
-//        quickSortI();
-//        quickSortII();
-        //mergeI();
-        //mergeII();
-        //counting();
-        //bucket();
-          radix();
+//        quickSortI(); //Ok
+//        quickSortII(); //Ok
+//        mergeI(); //Ok ~
+//        mergeII(); //Ok ~
+//        counting(); //Ok
+//        bucket(); //Ok
+//        radix(); //Ok
 //        comb();
-        //gnome();
-//        tim();
+//        gnome(); //Ok
+        tim();
 
         ordenado.exibirArq(); System.out.println("");
         auxreverso.exibirArq(); System.out.println("");
-        //auxrandomico.exibirArq(); 
+        auxrandomico.exibirArq(); 
         txt.close();
     }
     

@@ -1,4 +1,3 @@
 |MÉTODOS DE ORDENAÇÃO|ARQUIVO ORDENADO			|ARQUIVO EM ORDEM REVERSA	     |ARQUIVO RANDÔMICO
 |		     |Comp. 1	|Comp. 2|Mov. 1	|Mov. 2	|Tempo	|Comp. 1|Comp. 2|Mov. 1	|Mov. 2	|Tempo	|Comp. 1|Comp. 2|Mov. 1	|Mov. 2	|Tempo	|
-|Radix	     | 0	| -1	| 0	| -1	| 1103	| 0	| -1	| 0	| -1	| 1292	| 0	| -1	| 0	| -1	| 1218	|
-
+|Comb	     | 0	| -1	| 0	| -1	| 269	| 0	| -1	| 0	| -1	| 382	| 0	| -1	| 0	| -1	| 355	|
