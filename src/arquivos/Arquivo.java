@@ -9,7 +9,8 @@ public class Arquivo
 {
     private String nomearquivo;
     private RandomAccessFile arquivo;
-    private int comp, mov;
+    private int comp, mov, cont = 0;
+    
 
     public Arquivo(String nomearquivo)
     {
@@ -207,9 +208,11 @@ public class Arquivo
     {
         Registro regaux = new Registro(), regpos1 = new Registro();
         int i = ini + 1, tl = fim, pos;
-
+        
+        
         while(i < tl)
         {
+            System.out.print(cont++ + " ");
             pos = i;
 
             seekArq(pos - 1);
@@ -638,7 +641,7 @@ public class Arquivo
     public void merge1()
     {
         int seq = 1, tl = filesize(), meio = tl / 2;
-        int i = 0, j = 0, k = 0, aux_seq = seq, aux_seq2 = seq;
+        int i, j, k, aux_seq, aux_seq2;
         Registro reg1 = new Registro(), reg2 = new Registro();
         truncate(2 * tl);
         

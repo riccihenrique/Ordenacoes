@@ -1,17 +1,12 @@
 package arquivos;
 
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Main 
 {
     static final int n = 1024;
-    private Arquivo ordenado, reverso, randomico, auxreverso, auxrandomico;
-    private FileWriter txt;
-    private PrintWriter escritor;
+    private Arquivo ordenado, reverso, randomico, auxreverso, auxrandomico, tabela;
     private int tini, tfim, mov, com;
     private Lista lordenada, lreversa, lrandomica, lauxrandomica, lauxreversa;    
     
@@ -20,34 +15,25 @@ public class Main
         this.ordenado = new Arquivo("Odenado.dat");
         this.reverso = new Arquivo("Reverso.dat");
         this.randomico = new Arquivo("Randomico.dat");
+        this.tabela = new Arquivo("Tabela.txt");
         this.auxrandomico = new Arquivo();
         this.auxreverso = new Arquivo();
-        try
-        {
-           this.txt = new FileWriter("tabela.txt");
-           this.escritor = new PrintWriter(txt);
-        }
-        catch(Exception e)
-        {
-            System.out.println("Erro ao criar arquivo TXT");
-            System.exit(-1);
-        }
     }
     
-    private void escreveCabecalho()
+    private void escreveCabecalho() throws IOException
     {
-        escritor.println("|MÉTODOS DE ORDENAÇÃO|ARQUIVO ORDENADO\t\t\t\t|ARQUIVO EM ORDEM REVERSA\t\t "
-                + "|ARQUIVO RANDÔMICO");
-        escritor.println("|\t\t     |Comp. 1\t|Comp. 2|Mov. 1\t|Mov. 2\t|Tempo\t|Comp. 1|Comp. 2|Mov. 1\t|Mov. 2\t|Tempo\t|"
-                + "Comp. 1|Comp. 2|Mov. 1\t|Mov. 2\t|Tempo\t|");
+        tabela.getFile().writeBytes("|MÉTODOS DE ORDENAÇÃO|ARQUIVO ORDENADO\t\t\t\t|ARQUIVO EM ORDEM REVERSA\t\t "
+                + "|ARQUIVO RANDÔMICO\n");
+        tabela.getFile().writeBytes("|\t\t     |Comp. 1\t|Comp. 2|Mov. 1\t|Mov. 2\t|Tempo\t|Comp. 1|Comp. 2|Mov. 1\t|Mov. 2\t|Tempo\t|"
+                + "Comp. 1|Comp. 2|Mov. 1\t|Mov. 2\t|Tempo\t|\n");
     }
     
-    private void escreveTabela(String nomeMetodo, int cp, double ce, int mp, double me, double tempo)
+    private void escreveTabela(String nomeMetodo, int cp, double ce, int mp, double me, double tempo) throws IOException
     {
-        escritor.printf("%s %d\t| %.0f\t| %d\t| %.0f\t| %.0f\t|", nomeMetodo, cp, ce, mp, me, tempo);
+        tabela.getFile().writeBytes(nomeMetodo + " " + cp + "\t| " + (int) ce + "\t| " + mp + "\t| " +  (int) me + "\t| " + (int) tempo + "\t|");
     }
     
-    private void insertionSort()
+    private void insertionSort() throws IOException
     {
         //INSERÇÃO DIRETA
         //Arquivo Odernado
@@ -69,7 +55,7 @@ public class Main
         tfim = (int) System.currentTimeMillis();
         com = auxreverso.getComp();
         mov = auxreverso.getMov();
-        escreveTabela("", com, (Math.pow(n, 2) + n - 4) / 4, mov, (Math.pow(n, 2) + 3 * n - 4) / 2 , tfim - tini);
+        escreveTabela("", com, (Math.pow(n, 2) + n - 4) / 4, mov, (Math.pow(n, 2) + (3 * n) - 4) / 2 , tfim - tini);
         
 //        Arquivo Randômico
         auxrandomico.copiaArquivo(randomico.getFile());
@@ -80,11 +66,11 @@ public class Main
         tfim = (int) System.currentTimeMillis();
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
-        escreveTabela("", com, (Math.pow(n, 2) + n - 2) / 4, mov, (Math.pow(n, 2) + 9 * n - 10) / 4, tfim - tini);
-        escritor.println("\n");
+        escreveTabela("", com, (Math.pow(n, 2) + n - 2) / 4, mov, (Math.pow(n, 2) + (9 * n) - 10) / 4, tfim - tini);
+        tabela.getFile().writeBytes("\n");
     }
     
-    private void binaryInsertion()
+    private void binaryInsertion() throws IOException
     {
         //INSERÇÃO BINÁRIA
         //Arquivo Odernado
@@ -118,10 +104,10 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, n * (Math.log(n)), mov, (Math.pow(n, 2) + 9 * n - 10) / 4 , tfim - tini);
-        escritor.println("\n");
+        tabela.getFile().writeBytes("\n");
     }
     
-    private void selectionSort()
+    private void selectionSort() throws IOException
     {
         //SELEÇÃO DIRETA
         //Arquivo Odernado
@@ -155,10 +141,10 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, (Math.pow(n, 2)- n) / 2, mov, n * (Math.log((double) n) + 0.577216f), tfim - tini);
-        escritor.println("\n");
+        tabela.getFile().writeBytes("\n");
     }
     
-    private void bubbleSort()
+    private void bubbleSort() throws IOException
     {
         //BOLHA
         //Arquivo Odernado
@@ -169,7 +155,7 @@ public class Main
         tfim = (int) System.currentTimeMillis();
         com = ordenado.getComp();
         mov = ordenado.getMov();
-        escreveTabela("|Bubble Sort\t     |", com, 0, mov, 3 * (n - 1) , tfim - tini);
+        escreveTabela("|Bubble Sort\t     |", com, (Math.pow(n, 2)- n) / 2, mov, 0, tfim - tini);
         
         //Arquivo Reverso
         auxreverso.copiaArquivo(reverso.getFile());
@@ -192,10 +178,10 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, (Math.pow(n, 2)- n) / 2, mov, n * (Math.log((double) n) + 0.577216f) , tfim - tini);
-        escritor.println("\n");
+        tabela.getFile().writeBytes("\n");
     }
     
-    private void shakeSort()
+    private void shakeSort() throws IOException
     {
         //SHELL
         //Arquivo Odernado
@@ -229,10 +215,10 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, (Math.pow(n, 2) - n) / 2, mov, 3 * (Math.pow(n, 2) - n) / 2, tfim - tini);
-        escritor.println("\n");
+         tabela.getFile().writeBytes("\n");
     }
     
-    private void shellSort()
+    private void shellSort() throws IOException
     {
         //SHELL
         //Arquivo Odernado
@@ -266,10 +252,10 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, -1, mov, -1, tfim - tini);
-        escritor.println("\n");
+         tabela.getFile().writeBytes("\n");
     }
     
-    private void heapSort()
+    private void heapSort() throws IOException
     {
         //HEAP
         //Arquivo Odernado
@@ -303,10 +289,10 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, -1, mov, -1, tfim - tini);
-        escritor.println("\n");
+         tabela.getFile().writeBytes("\n");
     }
         
-    private void quickSortI()
+    private void quickSortI() throws IOException
     {
         //QUICK SEM PIVO
         //Arquivo Odernado
@@ -340,10 +326,10 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, -1, mov, -1, tfim - tini);
-        escritor.println("\n");
+         tabela.getFile().writeBytes("\n");
     }
     
-    private void quickSortII()
+    private void quickSortII() throws IOException
     {
         //QUICK COM PIVO
         //Arquivo Odernado
@@ -377,10 +363,10 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, (Math.pow(n, 2)- n) / 2, mov, n * (Math.log((double) n) + 0.577216f) , tfim - tini);
-        escritor.println("\n"); 
+         tabela.getFile().writeBytes("\n");
     }
     
-    private void mergeI()
+    private void mergeI() throws IOException
     {
         //MERGE 1ª Implementação
         //Arquivo Odernado
@@ -414,11 +400,11 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, -1, mov, -1, tfim - tini);
-        escritor.println("\n"); 
+         tabela.getFile().writeBytes("\n");
 
     }
     
-    private void mergeII()
+    private void mergeII() throws IOException
     {
         //MERGE 2ª Implementação
         //Arquivo Odernado
@@ -452,11 +438,11 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, -1, mov, -1, tfim - tini);
-        escritor.println("\n"); 
+         tabela.getFile().writeBytes("\n");
 
     }
     
-    private void counting()
+    private void counting() throws IOException
     {
         //Counting
         //Arquivo Odernado
@@ -490,10 +476,10 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, -1, mov, -1, tfim - tini);
-        escritor.println("\n"); 
+         tabela.getFile().writeBytes("\n");
     }
     
-    private void bucket()
+    private void bucket() throws IOException
     {
         //Bucket
         //Arquivo Odernado
@@ -527,10 +513,10 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, -1, mov, -1, tfim - tini);
-        escritor.println("\n"); 
+         tabela.getFile().writeBytes("\n");
     }
    
-    private void radix()
+    private void radix() throws IOException
     {
         //Radix
         //Arquivo Odernado
@@ -564,10 +550,10 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, -1, mov, -1, tfim - tini);
-        escritor.println("\n"); 
+         tabela.getFile().writeBytes("\n");
     }
     
-    private void comb()
+    private void comb() throws IOException
     {
         //Comb
         //Arquivo Odernado
@@ -601,10 +587,10 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, -1, mov, -1, tfim - tini);
-        escritor.println("\n"); 
+        tabela.getFile().writeBytes("\n");
     }
     
-    private void gnome()
+    private void gnome() throws IOException
     {
         //Gnome
         //Arquivo Odernado
@@ -638,10 +624,10 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, -1, mov, -1, tfim - tini);
-        escritor.println("\n"); 
+        tabela.getFile().writeBytes("\n");
     }
     
-    private void tim()
+    private void tim() throws IOException
     {
         //Tim
         //Arquivo Odernado
@@ -675,7 +661,7 @@ public class Main
         com = auxrandomico.getComp();
         mov = auxrandomico.getMov();
         escreveTabela("", com, -1, mov, -1, tfim - tini);
-        escritor.println("\n"); 
+        tabela.getFile().writeBytes("\n");
     }
     
     private void initLista()
@@ -712,14 +698,14 @@ public class Main
         System.out.println("Insetion...");
         insertionSort();System.out.println("Binario...");
         binaryInsertion();System.out.println("Selection...");
-        selectionSort(); System.out.println("Buble...");
+        selectionSort(); System.out.println("Bubble...");
         bubbleSort();System.out.println("Shake...");
         shakeSort();System.out.println("Shell...");
         shellSort();System.out.println("Heap...");
-        heapSort();System.out.println("Quick2...");
+        heapSort();System.out.println("Quick1...");
         quickSortI();System.out.println("Quick2...");
         quickSortII();System.out.println("Merge1...");
-        mergeI();System.out.println("MErge2...");
+        mergeI();System.out.println("Merge2...");
         mergeII();System.out.println("Counting...");
         counting();System.out.println("Bucket...");
         bucket();System.out.println("Radix...");
@@ -728,10 +714,6 @@ public class Main
         gnome();System.out.println("Tim...");
         tim();
         System.out.println(LocalTime.now());
-//        ordenado.exibirArq(); System.out.println("");
-//        auxreverso.exibirArq(); System.out.println("");
-//        auxrandomico.exibirArq(); 
-        txt.close();
     }
     
     public static void main(String[] args) throws IOException
