@@ -3,6 +3,8 @@ package arquivos;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Main 
 {
@@ -663,7 +665,7 @@ public class Main
         mov = auxreverso.getMov();
         escreveTabela("", com, -1, mov, -1, tfim - tini);
         
-        //Arquivo Randômico
+//        Arquivo Randômico
         auxrandomico.copiaArquivo(randomico.getFile());
         auxrandomico.initComp();
         auxrandomico.initMov();
@@ -705,27 +707,30 @@ public class Main
         reverso.geraArquivoReverso();
         randomico.geraArquivoRandomico();
         
-        insertionSort();
-        binaryInsertion();
-        selectionSort(); 
-        bubbleSort();
-        shakeSort();
-        shellSort();
-        heapSort();
-        quickSortI();
-        quickSortII();
-        mergeI();
-        mergeII();
-        counting();
-        bucket();
-        radix();
-        comb();
-        gnome();
+        System.out.println(LocalTime.now());
+        
+        System.out.println("Insetion...");
+        insertionSort();System.out.println("Binario...");
+        binaryInsertion();System.out.println("Selection...");
+        selectionSort(); System.out.println("Buble...");
+        bubbleSort();System.out.println("Shake...");
+        shakeSort();System.out.println("Shell...");
+        shellSort();System.out.println("Heap...");
+        heapSort();System.out.println("Quick2...");
+        quickSortI();System.out.println("Quick2...");
+        quickSortII();System.out.println("Merge1...");
+        mergeI();System.out.println("MErge2...");
+        mergeII();System.out.println("Counting...");
+        counting();System.out.println("Bucket...");
+        bucket();System.out.println("Radix...");
+        radix();System.out.println("Comb...");
+        comb();System.out.println("Gnome...");
+        gnome();System.out.println("Tim...");
         tim();
-
-        ordenado.exibirArq(); System.out.println("");
-        auxreverso.exibirArq(); System.out.println("");
-        auxrandomico.exibirArq(); 
+        System.out.println(LocalTime.now());
+//        ordenado.exibirArq(); System.out.println("");
+//        auxreverso.exibirArq(); System.out.println("");
+//        auxrandomico.exibirArq(); 
         txt.close();
     }
     

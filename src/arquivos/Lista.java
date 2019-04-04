@@ -584,6 +584,103 @@ public class Lista
         }
     }
     
+    public void gnome()
+    {
+        No i, j;
+
+        i = inicio;
+
+        while(i != fim)
+        {
+            if(i.getCod() > i.getProx().getCod())
+            {
+                j = i.getProx();
+
+                while(j != inicio && j.getCod() < j.getAnt().getCod())
+                {
+                    permutacao(j, j.getAnt());
+
+                    j = j.getAnt();
+                }
+            }
+            i = i.getProx();
+        }
+    }
+    
+    public void comb()
+    {
+        int fator = (int) (lenLista(inicio, fim) / 1.3);
+        No i = inicio, j = fim, aux;
+        int posA;
+        
+        while(fator > 0 && i != fim.getAnt())
+        {
+            i = inicio;
+            posA = pos(i) + fator;
+            while(i != fim)
+            {
+                aux = localizaNo(inicio, posA);
+                
+                if(i.getCod() > aux.getCod())
+                {
+                    permutacao(i, aux);
+                }
+                i = i.getProx();
+            }
+            fator = (int) (fator / 1.3);
+        }
+    }
+    
+    private void insercao_direta(No ini, No fim)
+    {
+        No i, pos;
+        int aux;
+        String lixo;
+        i = ini.getProx();
+        
+        while(i != fim.getProx())
+        {
+            pos = i;
+            aux = i.getCod();
+            lixo = i.getLixo();
+            while(pos != ini && aux < pos.getAnt().getCod())
+            {
+                pos.setCod(pos.getAnt().getCod());
+                pos.setLixo(pos.getAnt().getLixo());
+                pos = pos.getAnt();
+            }
+            pos.setCod(aux);
+            pos.setLixo(lixo);
+            i = i.getProx();
+        } 
+    }
+    
+    void timSort() 
+    { 
+        int run = 32, i, tam;
+        No aux, esq, dir, meio;
+        
+        for (i = 0; i < 1; i += run) 
+        {
+            aux = localizaNo(inicio, i);
+            if(aux != null)
+                insercao_direta(localizaNo(inicio, i), aux);
+            else
+                insercao_direta(localizaNo(inicio, i), fim);
+        }
+        
+        for (tam = run; tam <  1; tam = 2*tam) 
+        { 
+            for (esq = inicio; esq != fim; esq = localizaNo(esq, 2 * tam)) 
+            { 
+//                meio = esq + tam - 1; 
+//                dir = min((esq + 2*tam - 1), (n-1)); 
+//
+//                fusao(esq, meio, dir); 
+            } 
+        } 
+    } 
+    
     private int pos(No n)
     {
         int i = 0;

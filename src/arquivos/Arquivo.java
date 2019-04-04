@@ -217,7 +217,7 @@ public class Arquivo
             regaux.leDoArq(arquivo);
 
             comp++;
-            while(pos > 0 && regaux.getCodigo() < regpos1.getCodigo())
+            while(pos > ini && regaux.getCodigo() < regpos1.getCodigo())
             {
                 mov++;
                 seekArq(pos);
@@ -243,10 +243,11 @@ public class Arquivo
     {
         Registro regAux = new Registro(), regPos1 = new Registro(), regPos = new Registro();
         int i, tl, pos;
-       
-        tl = fim;
+        
         if(fim == -1)
             tl = filesize();
+        else
+            tl = fim;
 
         i = inicio + 1;
         while(i < tl)
@@ -254,7 +255,7 @@ public class Arquivo
             seekArq(i);
             regAux.leDoArq(arquivo);
 
-            pos = buscaBinaria(regAux.getCodigo(), i);
+            pos = buscaBinaria(regAux.getCodigo(), inicio, i);
 
             for(int j = i; j > pos; j--)
             {
@@ -271,9 +272,9 @@ public class Arquivo
         }
     }
 
-    private int buscaBinaria(int elemento, int tl)
+    private int buscaBinaria(int elemento, int ini, int tl)
     {
-        int ini = 0, fim = tl - 1, meio = fim / 2;
+        int fim = tl - 1, meio = (ini + fim) / 2;
         Registro reg = new Registro();
 
         seekArq(meio);
@@ -632,7 +633,6 @@ public class Arquivo
 
         if(fim > i)
             quickcp(i, fim);
-
     }
 
     public void merge1()
@@ -808,6 +808,7 @@ public class Arquivo
             reg1.leDoArq(aux.getFile());
             reg1.gravaNoArq(arquivo);
         }
+        aux.truncate(0);
     }
     
     public void countingSort()
@@ -937,9 +938,10 @@ public class Arquivo
         Registro reg = new Registro();
         int count[];
         Arquivo aux = new Arquivo("auxMerge.dat");
-        seekArq(0);
         for(i = 1; i < max; i *= 10)
         {
+            aux.truncate(TL);
+            aux.seekArq(0);
             count = new int[10];
             
             //contando os elementos
@@ -973,6 +975,7 @@ public class Arquivo
                 reg.gravaNoArq(arquivo);
             }
         }
+        aux.truncate(0);
     }
     
     public void comb()
@@ -1009,6 +1012,7 @@ public class Arquivo
     {
         int i, tl = filesize(), run = 32, size, esq, dir, meio;
         Arquivo aux = new Arquivo("auxMerge.dat");
+        aux.truncate(tl);
         
         for(i = 0; i < tl; i += run)
         {
@@ -1016,15 +1020,15 @@ public class Arquivo
                 insercao_binaria(i, i + run);
             else
                 insercao_binaria(i, tl);
-        }     
-            
+        }
+        
         for(size = run; size < tl; size *= 2)
             for(esq = 0; esq < tl; esq += 2 * size)
             {
                 if(esq + 2 * size < tl)
-                    dir = esq + 2 * size;
+                    dir = esq + 2 * size - 1;
                 else
-                    dir = tl;
+                    dir = tl - 1;
 
                 meio = (esq + dir) / 2;
 
