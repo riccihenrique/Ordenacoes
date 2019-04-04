@@ -212,7 +212,6 @@ public class Arquivo
         
         while(i < tl)
         {
-            System.out.print(cont++ + " ");
             pos = i;
 
             seekArq(pos - 1);
@@ -239,6 +238,7 @@ public class Arquivo
             regaux.gravaNoArq(arquivo);
 
             i++;
+            System.out.print(mov + " ");
         }
     }
 
