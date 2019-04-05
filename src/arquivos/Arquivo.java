@@ -909,7 +909,6 @@ public class Arquivo
             mat[(int) ((reg.getCodigo() / (float) Main.n) * 10)][index[(int) ((reg.getCodigo() / (float) Main.n) * 10)]++] = reg;
         }
         
-        seekArq(0);
         for(i = 0; i < 10; i++)
         {
             j = 1;
@@ -917,7 +916,7 @@ public class Arquivo
             {
                 k = j;
                 comp++;
-                while(mat[i][k].getCodigo() > mat[i][k - 1].getCodigo())
+                while(mat[i][k].getCodigo() < mat[i][k - 1].getCodigo())
                 {
                     reg = mat[i][k];
                     mat[i][k] = mat[i][k - 1];
@@ -926,12 +925,14 @@ public class Arquivo
                 }
                 j++;
             }
-            
-            for(j = 0; j < index[i]; j++)
-            {
-                mov++;
-                mat[i][j].gravaNoArq(arquivo);
-            }
+           
+            seekArq(0);
+            for(i = 0; i < 10; i++)
+                for(j = 0; j < index[i]; j++)
+                {
+                    mov++;
+                    mat[i][j].gravaNoArq(arquivo);
+                }
         }
     }
     

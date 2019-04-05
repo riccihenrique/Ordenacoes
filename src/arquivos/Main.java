@@ -5,7 +5,7 @@ import java.time.LocalTime;
 
 public class Main 
 {
-    static final int n = 1024;
+    static final int n = 16;
     private Arquivo ordenado, reverso, randomico, auxreverso, auxrandomico, tabela;
     private int tini, tfim, mov, com;
     private Lista lordenada, lreversa, lrandomica, lauxrandomica, lauxreversa;    
@@ -695,24 +695,26 @@ public class Main
         
         System.out.println(LocalTime.now());
         
-        System.out.println("Insetion...");
-        insertionSort();System.out.println("Binario...");
-        binaryInsertion();System.out.println("Selection...");
-        selectionSort(); System.out.println("Bubble...");
-        bubbleSort();System.out.println("Shake...");
-        shakeSort();System.out.println("Shell...");
-        shellSort();System.out.println("Heap...");
-        heapSort();System.out.println("Quick1...");
-        quickSortI();System.out.println("Quick2...");
-        quickSortII();System.out.println("Merge1...");
-        mergeI();System.out.println("Merge2...");
-        mergeII();System.out.println("Counting...");
-        counting();System.out.println("Bucket...");
+//        System.out.println("Insetion...");
+//        insertionSort();System.out.println("Binario...");
+//        binaryInsertion();System.out.println("Selection...");
+//        selectionSort(); System.out.println("Bubble...");
+//        bubbleSort();System.out.println("Shake...");
+//        shakeSort();System.out.println("Shell...");
+//        shellSort();System.out.println("Heap...");
+//        heapSort();System.out.println("Quick1...");
+//        quickSortI();System.out.println("Quick2...");
+//        quickSortII();System.out.println("Merge1...");
+//        mergeI();System.out.println("Merge2...");
+//        mergeII();System.out.println("Counting...");
+//        counting();System.out.println("Bucket...");
         bucket();System.out.println("Radix...");
-        radix();System.out.println("Comb...");
-        comb();System.out.println("Gnome...");
-        gnome();System.out.println("Tim...");
-        tim();
+//        radix();System.out.println("Comb...");
+//        comb();System.out.println("Gnome...");
+//        gnome();System.out.println("Tim...");
+//        tim();
+
+        ordenado.exibirArq();
         System.out.println(LocalTime.now());
     }
     
