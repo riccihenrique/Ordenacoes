@@ -1,4 +1,0 @@
-|MÉTODOS DE ORDENAÇÃO|ARQUIVO ORDENADO				|ARQUIVO EM ORDEM REVERSA		 |ARQUIVO RANDÔMICO
-|		     |Comp. 1	|Comp. 2|Mov. 1	|Mov. 2	|Tempo	|Comp. 1|Comp. 2|Mov. 1	|Mov. 2	|Tempo	|Comp. 1|Comp. 2|Mov. 1	|Mov. 2	|Tempo	|
-|Binary Insertion    | 72	| 0	| 0	| 33	| 425	| 71	| 66	| 132	| 88	| 2419	| 61	| 30	| 84	| 61	| 1722	|
-
